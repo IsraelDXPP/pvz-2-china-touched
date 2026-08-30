@@ -92,6 +92,11 @@ jobs:
           ls -d android-ndk-${NDK_VERSION}
           ./android-ndk-${NDK_VERSION}/ndk-build --version | head -3
 
+      - name: Ajustar case de includes (Linux case-sensitive)
+        run: |
+          set -euo pipefail
+          python3 ci/fix_case.py
+
       - name: Compilar libSrcExt.so (arm64-v8a + armeabi-v7a)
         run: |
           set -euo pipefail
