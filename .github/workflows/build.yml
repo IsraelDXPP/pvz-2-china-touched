@@ -141,6 +141,11 @@ jobs:
           grep -n -A2 'const-string .*"Src' \
             ws/smali/com/popcap/SexyAppFramework/SexyAppFrameworkActivity.smali | head -20
 
+      - name: Patch login (salta sesion tw SDK)
+        run: |
+          set -euo pipefail
+          python3 patch/patch_login.py 'ws/smali/com/popcap/purchase/TW/TWPurchase$1$1.smali'
+
       - name: Rebuild APK (apktool b)
         run: |
           set -euo pipefail
