@@ -57,7 +57,7 @@ jobs:
       - name: Descargar APK original desde Google Drive
         run: |
           set -euo pipefail
-          python3 -m pip install --quiet gdown
+          python3 -m pip install --quiet --upgrade gdown
           SRC="${{ inputs.apk_source }}"
           if [[ "$SRC" =~ ^https?:// ]]; then
             gdown --fuzzy --continue -O original.apk "$SRC"
