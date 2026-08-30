@@ -25,40 +25,40 @@ __atomic_swap(int32_t _new, volatile int32_t *ptr)
 	return __sync_lock_test_and_set(ptr, _new);
 }
 
-static __inline__ void
+static __inline__ int32_t
 __atomic_inc(volatile int32_t *ptr)
 {
-	(void)__sync_fetch_and_add(ptr, 1);
+	return __sync_fetch_and_add(ptr, 1);
 }
 
-static __inline__ void
+static __inline__ int32_t
 __atomic_dec(volatile int32_t *ptr)
 {
-	(void)__sync_fetch_and_add(ptr, -1);
+	return __sync_fetch_and_add(ptr, -1);
 }
 
-static __inline__ void
+static __inline__ int32_t
 __atomic_add(volatile int32_t *ptr, int32_t value)
 {
-	(void)__sync_fetch_and_add(ptr, value);
+	return __sync_fetch_and_add(ptr, value);
 }
 
-static __inline__ void
+static __inline__ int32_t
 __atomic_sub(volatile int32_t *ptr, int32_t value)
 {
-	(void)__sync_fetch_and_sub(ptr, value);
+	return __sync_fetch_and_sub(ptr, value);
 }
 
-static __inline__ void
+static __inline__ int32_t
 __atomic_and(volatile int32_t *ptr, int32_t value)
 {
-	(void)__sync_fetch_and_and(ptr, value);
+	return __sync_fetch_and_and(ptr, value);
 }
 
-static __inline__ void
+static __inline__ int32_t
 __atomic_or(volatile int32_t *ptr, int32_t value)
 {
-	(void)__sync_fetch_and_or(ptr, value);
+	return __sync_fetch_and_or(ptr, value);
 }
 
 __END_DECLS
