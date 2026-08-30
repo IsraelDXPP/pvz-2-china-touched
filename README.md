@@ -41,7 +41,8 @@ Los hooks viven en:
 ## Pipeline
 
 1. **Entrada**: URL o file-id de Google Drive del APK original (~1.2 GB).
-2. **Nativo**: NDK r10e → `libs/<ABI>/libSrcExt.so` (Main.cpp + hook según ABI).
+2. **Nativo**: NDK → `libs/<ABI>/libSrcExt.so` (Main.cpp + hook según ABI).
+   CI usa NDK **r14b** (mismo gcc 4.9 + gnustl_static; Google ya no hospeda r10e en `dl.google.com`).
 3. **Decodificar**: `apktool d -f -o ws original.apk`.
 4. **Swap**: `lib/<ABI>/libSrc.so` stock → touched (ambas ABIs).
 5. **Inyección**: `lib/<ABI>/libSrcExt.so`.
