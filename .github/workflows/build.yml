@@ -150,26 +150,38 @@ jobs:
       - name: zipalign
         run: |
           set -euo pipefail
-          yes | sdkmanager --licenses > /dev/null 2>&1 || true
-          sdkmanager --install "build-tools;${BUILDTOOLS_VERSION}" > /dev/null
-          BT="$ANDROID_HOME/build-tools/${BUILDTOOLS_VERSION}"
-          ls "$BT"
-          "$BT/zipalign" -f -p 4 unsigned.apk aligned.apk
+          SDK="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          BTDIR=""
+          for d in "$SDK"/build-tools/*/; do
+            if [ -f "$d/zipalign" ]; then BTDIR="$d"; break; fi
+          done
+          if [ -z "$BTDIR" ]; then
+            echo "No hay build-tools preinstalados; descargando r30.0.3..."
+            mkdir -p "$SDK/build-tools"
+            curl -fsSL -o /tmp/bt.zip \
+              "https://dl.google.com/android/repository/build-tools_r30.0.3-linux.zip"
+            rm -rf /tmp/bt "$SDK/build-tools/30.0.3"
+            unzip -q /tmp/bt.zip -d /tmp/bt
+            mv /tmp/bt/android-11 "$SDK/build-tools/30.0.3"
+            BTDIR="$SDK/build-tools/30.0.3"
+          fi
+          echo "BTDIR=$BTDIR" >> "$GITHUB_ENV"
+          ls "$BTDIR" | head
+          "$BTDIR/zipalign" -f -p 4 unsigned.apk aligned.apk
           ls -la aligned.apk
 
       - name: Firmar (CN=Offline)
         run: |
           set -euo pipefail
-          BT="$ANDROID_HOME/build-tools/${BUILDTOOLS_VERSION}"
           keytool -genkeypair -keystore offline.keystore -alias pvz2ch \
             -keyalg RSA -keysize 2048 -validity 10000 \
             -storepass offline123 -keypass offline123 \
             -dname "CN=Offline, OU=pvz2ch, O=Offline, L=NA, ST=NA, C=NA"
-          "$BT/apksigner" sign \
+          "$BTDIR/apksigner" sign \
             --ks offline.keystore --ks-key-alias pvz2ch \
             --ks-pass pass:offline123 --key-pass pass:offline123 \
             --out "${{ inputs.apk_name }}" aligned.apk
-          "$BT/apksigner" verify --print-certs "${{ inputs.apk_name }}"
+          "$BTDIR/apksigner" verify --print-certs "${{ inputs.apk_name }}"
           ls -la "${{ inputs.apk_name }}"
           echo "=== RESUMEN ==="
           echo "APK final: ${{ inputs.apk_name }}"
