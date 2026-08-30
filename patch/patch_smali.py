@@ -57,8 +57,8 @@ def patch(path: str) -> int:
         + indent
         + 'const-string %s, "SrcExt"\n'
         + indent
-        + "invoke-static {%s}, %s\n" % (reg, LOADLIB)
-    )
+        + "invoke-static {%s}, %s\n"
+    ) % (reg, reg, LOADLIB)
 
     src = src[: m.end()] + inject + src[m.end():]
     with open(path, "w", encoding="utf-8") as f:
