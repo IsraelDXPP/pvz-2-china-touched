@@ -57,13 +57,16 @@ jobs:
       - name: Descargar APK original desde Google Drive
         run: |
           set -euo pipefail
-          python3 -m pip install --quiet --upgrade gdown
+          python3 -m pip install --quiet --upgrade gdown || true
           SRC="${{ inputs.apk_source }}"
-          if [[ "$SRC" =~ ^https?:// ]]; then
-            gdown --fuzzy --continue -O original.apk "$SRC"
-          else
-            gdown --continue -O original.apk "$SRC"
+          ID=$(printf '%s' "$SRC" | grep -oE '[A-Za-z0-9_-]{25,}' | head -1)
+          if [ -z "$ID" ]; then
+            echo "::error::No se pudo extraer un file-id de Google Drive: $SRC"
+            echo "Usa una URL tipo https://drive.google.com/file/d/<ID>/view"
+            exit 1
           fi
+          echo "Google Drive file-id: $ID"
+          gdown --continue -O original.apk "$ID"
           ls -la original.apk
           echo "sha256 original:"; sha256sum original.apk
           SZ=$(stat -c%s original.apk)
