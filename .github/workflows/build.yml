@@ -1,0 +1,191 @@
+name: build-n-publish
+
+# Pipeline completo de PvZ2 China Touched:
+#   1. Descarga el APK ORIGINAL (conto talkweb securitypay) desde Google Drive
+#   2. SWAP: reemplaza lib/arm64-v8a/libSrc.so (73MB stock) y
+#      lib/armeabi-v7a/libSrc.so (45MB stock) por los motores "touched"
+#      (104MB / 77MB, exportan los simbolos C++ que los hooks necesitan)
+#   3. Compila libSrcExt.so (Main.cpp, NDK r10e) para arm64-v8a
+#      (And64InlineHook) y armeabi-v7a (Arm32InlineHook de 8 bytes)
+#   4. Parcha el smali: agrega System.loadLibrary("SrcExt") en
+#      SmaliApp/.../SexyAppFrameworkActivity
+#   5. Rebuild con apktool, zipalign, firma CN=Offline (apksigner)
+#   6. Publica: artifact + GitHub Release opcional
+
+on:
+  workflow_dispatch:
+    inputs:
+      apk_source:
+        description: >-
+          URL o file-id de Google Drive del APK original
+          (com.talkweb.securitypay.TwApplication.apk)
+        required: true
+      apk_name:
+        description: Nombre del APK de salida
+        required: false
+        default: PvZ2CH_Touched.apk
+      release_tag:
+        description: Tag para crear GitHub Release (vacio = solo artifact)
+        required: false
+        default: ""
+      release_title:
+        description: Titulo del release
+        required: false
+        default: PvZ2 China Touched (offline)
+
+env:
+  APKTOOL_VERSION: "3.0.3"
+  NDK_VERSION: "r10e"
+  BUILDTOOLS_VERSION: "30.0.3"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout (con LFS)
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Descargar APK original desde Google Drive
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet gdown
+          SRC="${{ inputs.apk_source }}"
+          if [[ "$SRC" =~ ^https?:// ]]; then
+            gdown --fuzzy --continue -O original.apk "$SRC"
+          else
+            gdown --continue -O original.apk "$SRC"
+          fi
+          ls -la original.apk
+          echo "sha256 original:"; sha256sum original.apk
+          SZ=$(stat -c%s original.apk)
+          if (( SZ < 1000000000 )); then
+            echo "::warning::El APK descargado parece demasiado pequeno ($SZ bytes). Esperaba ~1.2GB."
+          fi
+
+      - name: Instalar apktool
+        run: |
+          set -euo pipefail
+          mkdir -p tools
+          curl -fSL -o tools/apktool.jar \
+            "https://github.com/iBotPeaches/Apktool/releases/download/v${APKTOOL_VERSION}/apktool_${APKTOOL_VERSION}.jar"
+          java -jar tools/apktool.jar --version
+
+      - name: Instalar NDK r10e
+        run: |
+          set -euo pipefail
+          curl -fSL -o android-ndk-${NDK_VERSION}-linux-x86_64.bin \
+            "https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux-x86_64.bin"
+          chmod +x android-ndk-${NDK_VERSION}-linux-x86_64.bin
+          ./android-ndk-${NDK_VERSION}-linux-x86_64.bin > /dev/null
+          ls -d android-ndk-${NDK_VERSION}*
+          ./android-ndk-${NDK_VERSION}/ndk-build --version | head -3
+
+      - name: Compilar libSrcExt.so (arm64-v8a + armeabi-v7a)
+        run: |
+          set -euo pipefail
+          ./android-ndk-${NDK_VERSION}/ndk-build -j4
+          ls -la libs/arm64-v8a/ libs/armeabi-v7a/
+          file libs/arm64-v8a/libSrcExt.so libs/armeabi-v7a/libSrcExt.so
+          echo "hash libSrcExt arm64:"; sha256sum libs/arm64-v8a/libSrcExt.so
+          echo "hash libSrcExt v7a:";   sha256sum libs/armeabi-v7a/libSrcExt.so
+          test -s libs/arm64-v8a/libSrcExt.so
+          test -s libs/armeabi-v7a/libSrcExt.so
+
+      - name: Decodificar APK original
+        run: |
+          set -euo pipefail
+          java -jar tools/apktool.jar d -f -o ws original.apk
+          ls -la ws/apktool.yml
+          echo "hash libSrc.so ORIGINAL (antes del swap):"
+          sha256sum ws/lib/arm64-v8a/libSrc.so ws/lib/armeabi-v7a/libSrc.so
+          echo "hash libSrc.so TOUCHED (prebuilt):"
+          sha256sum prebuilt/arm64-v8a/libSrc.so prebuilt/armeabi-v7a/libSrc.so
+
+      - name: SWAP libSrc.so (stock -> touched, ambas ABIs)
+        run: |
+          set -euo pipefail
+          cp -v prebuilt/arm64-v8a/libSrc.so  ws/lib/arm64-v8a/libSrc.so
+          cp -v prebuilt/armeabi-v7a/libSrc.so ws/lib/armeabi-v7a/libSrc.so
+          ls -la ws/lib/arm64-v8a/libSrc.so ws/lib/armeabi-v7a/libSrc.so
+
+      - name: Inyectar libSrcExt.so (ambas ABIs)
+        run: |
+          set -euo pipefail
+          mkdir -p ws/lib/arm64-v8a ws/lib/armeabi-v7a
+          cp -v libs/arm64-v8a/libSrcExt.so  ws/lib/arm64-v8a/libSrcExt.so
+          cp -v libs/armeabi-v7a/libSrcExt.so ws/lib/armeabi-v7a/libSrcExt.so
+          ls -la ws/lib/arm64-v8a/ ws/lib/armeabi-v7a/
+
+      - name: Parchar smali (loadLibrary SrcExt)
+        run: |
+          set -euo pipefail
+          python3 patch/patch_smali.py ws/smali/com/popcap/SexyAppFramework/SexyAppFrameworkActivity.smali
+          echo "--- bloque resultante ---"
+          rg -n -A2 'const-string .*"Src' \
+            ws/smali/com/popcap/SexyAppFramework/SexyAppFrameworkActivity.smali | head -20
+
+      - name: Rebuild APK (apktool b)
+        run: |
+          set -euo pipefail
+          java -jar tools/apktool.jar b -o unsigned.apk ws
+          ls -la unsigned.apk
+
+      - name: zipalign
+        run: |
+          set -euo pipefail
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager --install "build-tools;${BUILDTOOLS_VERSION}" > /dev/null
+          BT="$ANDROID_HOME/build-tools/${BUILDTOOLS_VERSION}"
+          ls "$BT"
+          "$BT/zipalign" -f -p 4 unsigned.apk aligned.apk
+          ls -la aligned.apk
+
+      - name: Firmar (CN=Offline)
+        run: |
+          set -euo pipefail
+          BT="$ANDROID_HOME/build-tools/${BUILDTOOLS_VERSION}"
+          keytool -genkeypair -keystore offline.keystore -alias pvz2ch \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass offline123 -keypass offline123 \
+            -dname "CN=Offline, OU=pvz2ch, O=Offline, L=NA, ST=NA, C=NA"
+          "$BT/apksigner" sign \
+            --ks offline.keystore --ks-key-alias pvz2ch \
+            --ks-pass pass:offline123 --key-pass pass:offline123 \
+            --out "${{ inputs.apk_name }}" aligned.apk
+          "$BT/apksigner" verify --print-certs "${{ inputs.apk_name }}"
+          ls -la "${{ inputs.apk_name }}"
+          echo "=== RESUMEN ==="
+          echo "APK final: ${{ inputs.apk_name }}"
+          sha256sum "${{ inputs.apk_name }}"
+
+      - name: Subir artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pvz2ch-touched
+          path: ${{ inputs.apk_name }}
+          if-no-files-found: error
+
+      - name: Crear GitHub Release
+        if: ${{ inputs.release_tag != '' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.release_tag }}
+          name: ${{ inputs.release_title }}
+          body: |
+            PvZ2 China Touched (offline) — build automática.
+            - Motor: swap libSrc.so en arm64-v8a (73MB -> 104MB) y armeabi-v7a (45MB -> 77MB)
+            - Hooks nativos libSrcExt.so (Main.cpp): firma, offline, SyncPlayerInfoFinish,
+              Lua engine desactivado, tutoriales/comodines (arm64: And64InlineHook, v7a: Arm32InlineHook)
+            - Smali: loadLibrary("SrcExt")
+            - Firma: CN=Offline (no oficial)
+          files: ${{ inputs.apk_name }}
+          make_latest: true

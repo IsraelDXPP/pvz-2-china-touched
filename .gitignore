@@ -1,0 +1,31 @@
+# NDK r10e / build local de libSrcExt
+obj/
+libs/
+
+# Apktool workspace y APKs
+ws/
+original.apk
+unsigned.apk
+aligned.apk
+*.apk
+*.keystore
+
+# Herramientas descargadas por el workflow / locales
+tools/
+android-ndk-*/
+android-ndk-*.bin
+
+# IDA / diagnóstico
+*.i64
+*.id0
+*.id1
+*.id2
+*.nam
+*.til
+
+# Editor / SO
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
