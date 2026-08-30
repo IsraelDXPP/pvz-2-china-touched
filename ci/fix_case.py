@@ -95,9 +95,47 @@ def walk_resolve(dirpath, parts, created):
     return True
 
 
+def bridge_roots(created):
+    """Asegura que existan las raices de -I de Android.mk con su ortografia
+    exacta (p.ej. 'pvz/dnode' -> real 'pvz/DNode'). Devuelve la lista de
+    rutas efectivas (pueden ser symlinks)."""
+    effective = []
+    for r in INCLUDE_ROOTS:
+        parts = [p for p in r.replace("\\", "/").split("/") if p]
+        cur = HEADER
+        ok = True
+        for comp in parts:
+            try:
+                children = os.listdir(cur)
+            except OSError:
+                ok = False
+                break
+            if comp in children:
+                cur = os.path.join(cur, comp)
+                continue
+            cis = [e for e in children if e.lower() == comp.lower()]
+            if len(cis) != 1:
+                ok = False
+                break
+            target = os.path.join(cur, cis[0])
+            alias = os.path.join(cur, comp)
+            if not os.path.lexists(alias):
+                try:
+                    os.symlink(cis[0], alias)
+                    created.append(alias)
+                except OSError as exc:
+                    sys.stderr.write("warning: no pude crear raiz %s: %s\n" % (alias, exc))
+                    ok = False
+                    break
+            cur = alias
+        effective.append(cur if ok else None)
+    return effective
+
+
 def main():
     created = []
     disabled = []
+    roots = bridge_roots(created)
 
     for f in collect_files():
         try:
@@ -110,13 +148,13 @@ def main():
         for m in INCLUDE_RE.finditer(text):
             quoted, inc = m.group(1) == '"', m.group(2)
             parts = [x for x in inc.replace("\\", "/").split("/") if x]
-            bases = ([own_dir] if quoted else []) + ROOT_DIRS
+            bases = ([own_dir] if quoted else []) + [b for b in roots if b]
             hit = False
             for base in bases:
                 if walk_resolve(base, parts, created):
                     hit = True
                     break
-            if not hit and len(bases) < 3 and inc.endswith(".h"):
+            if not hit and inc.endswith(".h"):
                 disabled.append(inc)
 
     if created:
