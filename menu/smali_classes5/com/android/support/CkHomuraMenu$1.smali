@@ -57,19 +57,19 @@
         }
     .end annotation
 
-    .line 335
+    .line 337
     iput-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iput-object p2, p0, Lcom/android/support/CkHomuraMenu$1;->val$sharedPreferences:Landroid/content/SharedPreferences;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 336
+    .line 338
     iget-object p2, p1, Lcom/android/support/CkHomuraMenu;->mCollapsed:Landroid/widget/RelativeLayout;
 
     iput-object p2, p0, Lcom/android/support/CkHomuraMenu$1;->collapsedView:Landroid/view/View;
 
-    .line 337
+    .line 339
     iget-object p1, p1, Lcom/android/support/CkHomuraMenu;->mExpanded:Landroid/widget/LinearLayout;
 
     iput-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->expandedView:Landroid/view/View;
@@ -82,7 +82,7 @@
 .method public onTouch(Landroid/view/View;Landroid/view/MotionEvent;)Z
     .registers 8
 
-    .line 343
+    .line 345
     invoke-virtual {p2}, Landroid/view/MotionEvent;->getAction()I
 
     move-result p1
@@ -101,7 +101,7 @@
 
     return v1
 
-    .line 352
+    .line 354
     :cond_e
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
@@ -111,14 +111,14 @@
 
     invoke-virtual {p1, v1}, Landroid/widget/LinearLayout;->setAlpha(F)V
 
-    .line 353
+    .line 355
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object p1, p1, Lcom/android/support/CkHomuraMenu;->mCollapsed:Landroid/widget/RelativeLayout;
 
     invoke-virtual {p1, v1}, Landroid/widget/RelativeLayout;->setAlpha(F)V
 
-    .line 354
+    .line 356
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object p1, p1, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
@@ -139,7 +139,7 @@
 
     iput v1, p1, Landroid/view/WindowManager$LayoutParams;->x:I
 
-    .line 355
+    .line 357
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object p1, p1, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
@@ -160,7 +160,7 @@
 
     iput v1, p1, Landroid/view/WindowManager$LayoutParams;->y:I
 
-    .line 356
+    .line 358
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object p1, p1, Lcom/android/support/CkHomuraMenu;->mWindowManager:Landroid/view/WindowManager;
@@ -177,7 +177,7 @@
 
     return v0
 
-    .line 359
+    .line 361
     :cond_50
     invoke-virtual {p2}, Landroid/view/MotionEvent;->getRawX()F
 
@@ -193,7 +193,7 @@
 
     float-to-int p1, p1
 
-    .line 360
+    .line 362
     invoke-virtual {p2}, Landroid/view/MotionEvent;->getRawY()F
 
     move-result p2
@@ -208,7 +208,7 @@
 
     float-to-int p2, p2
 
-    .line 361
+    .line 363
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object v2, v2, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
@@ -236,7 +236,7 @@
 
     iput v3, v2, Landroid/view/WindowManager$LayoutParams;->x:I
 
-    .line 362
+    .line 364
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object v2, v2, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
@@ -264,7 +264,7 @@
 
     iput v3, v2, Landroid/view/WindowManager$LayoutParams;->y:I
 
-    .line 363
+    .line 365
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu$1;->val$sharedPreferences:Landroid/content/SharedPreferences;
 
     invoke-interface {v2}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
@@ -297,7 +297,7 @@
 
     invoke-interface {v2}, Landroid/content/SharedPreferences$Editor;->apply()V
 
-    .line 364
+    .line 366
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object v2, v2, Lcom/android/support/CkHomuraMenu;->mWindowManager:Landroid/view/WindowManager;
@@ -312,7 +312,7 @@
 
     invoke-interface {v2, v3, v4}, Landroid/view/WindowManager;->updateViewLayout(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 365
+    .line 367
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object v2, v2, Lcom/android/support/CkHomuraMenu;->mExpanded:Landroid/widget/LinearLayout;
@@ -321,7 +321,7 @@
 
     invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->setAlpha(F)V
 
-    .line 366
+    .line 368
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object v2, v2, Lcom/android/support/CkHomuraMenu;->mCollapsed:Landroid/widget/RelativeLayout;
@@ -334,7 +334,7 @@
 
     if-ge p2, v2, :cond_104
 
-    .line 367
+    .line 369
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     # invokes: Lcom/android/support/CkHomuraMenu;->isViewCollapsed()Z
@@ -358,7 +358,7 @@
 
     if-gez v4, :cond_104
 
-    .line 369
+    .line 371
     :try_start_f8
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->collapsedView:Landroid/view/View;
 
@@ -366,7 +366,7 @@
 
     invoke-virtual {p1, p2}, Landroid/view/View;->setVisibility(I)V
 
-    .line 370
+    .line 372
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->expandedView:Landroid/view/View;
 
     invoke-virtual {p1, v1}, Landroid/view/View;->setVisibility(I)V
@@ -377,7 +377,7 @@
     :cond_104
     return v0
 
-    .line 345
+    .line 347
     :cond_105
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
@@ -387,7 +387,7 @@
 
     iput p1, p0, Lcom/android/support/CkHomuraMenu$1;->initialX:I
 
-    .line 346
+    .line 348
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$1;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iget-object p1, p1, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
@@ -396,21 +396,21 @@
 
     iput p1, p0, Lcom/android/support/CkHomuraMenu$1;->initialY:I
 
-    .line 347
+    .line 349
     invoke-virtual {p2}, Landroid/view/MotionEvent;->getRawX()F
 
     move-result p1
 
     iput p1, p0, Lcom/android/support/CkHomuraMenu$1;->initialTouchX:F
 
-    .line 348
+    .line 350
     invoke-virtual {p2}, Landroid/view/MotionEvent;->getRawY()F
 
     move-result p1
 
     iput p1, p0, Lcom/android/support/CkHomuraMenu$1;->initialTouchY:F
 
-    .line 349
+    .line 351
     invoke-static {}, Ljava/lang/System;->nanoTime()J
 
     move-result-wide p1

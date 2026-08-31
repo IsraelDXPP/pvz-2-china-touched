@@ -57,7 +57,7 @@
         }
     .end annotation
 
-    .line 957
+    .line 962
     iput-object p1, p0, Lcom/android/support/CkHomuraMenu$5;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iput-boolean p2, p0, Lcom/android/support/CkHomuraMenu$5;->val$expanded:Z
@@ -70,7 +70,7 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 958
+    .line 963
     iput-boolean p2, p0, Lcom/android/support/CkHomuraMenu$5;->isChecked:Z
 
     return-void
@@ -81,12 +81,12 @@
 .method public onClick(Landroid/view/View;)V
     .registers 5
 
-    .line 963
+    .line 968
     iget-boolean p1, p0, Lcom/android/support/CkHomuraMenu$5;->isChecked:Z
 
     xor-int/lit8 v0, p1, 0x1
 
-    .line 964
+    .line 969
     iput-boolean v0, p0, Lcom/android/support/CkHomuraMenu$5;->isChecked:Z
 
     const/4 v0, 0x0
@@ -95,12 +95,12 @@
 
     if-nez p1, :cond_21
 
-    .line 966
+    .line 971
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$5;->val$collapseSub:Landroid/widget/LinearLayout;
 
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->setVisibility(I)V
 
-    .line 967
+    .line 972
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$5;->val$textView:Landroid/widget/TextView;
 
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu$5;->val$text:Ljava/lang/String;
@@ -119,7 +119,7 @@
 
     return-void
 
-    .line 970
+    .line 975
     :cond_21
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$5;->val$collapseSub:Landroid/widget/LinearLayout;
 
@@ -127,7 +127,7 @@
 
     invoke-virtual {p1, v2}, Landroid/widget/LinearLayout;->setVisibility(I)V
 
-    .line 971
+    .line 976
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$5;->val$textView:Landroid/widget/TextView;
 
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu$5;->val$text:Ljava/lang/String;

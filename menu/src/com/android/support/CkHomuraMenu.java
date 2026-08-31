@@ -205,15 +205,16 @@ public class CkHomuraMenu {
         relativeLayout.setPadding(10, 3, 10, 3);
         relativeLayout.setVerticalGravity(Gravity.CENTER);
 
-        //**********  Hide/Kill button **********
+        //**********  Close/Kill button (left) - destroys the menu **********
         RelativeLayout.LayoutParams lParamsHideBtn = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lParamsHideBtn.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
         Button hideBtn = new Button(context);
         hideBtn.setLayoutParams(lParamsHideBtn);
         hideBtn.setBackgroundColor(Color.TRANSPARENT);
-        hideBtn.setText("\u2715");
-        hideBtn.setTextColor(TEXT_COLOR);
+        hideBtn.setText("\u2715"); // ✕ close - destroy menu
+        hideBtn.setTextColor(Color.RED);
+        hideBtn.setTypeface(Typeface.DEFAULT_BOLD);
         hideBtn.setOnClickListener(view -> Toast.makeText(getContext, "Mantén pulsado para cerrar el menú", Toast.LENGTH_LONG).show());
         hideBtn.setOnLongClickListener(view -> {
             Toast.makeText(getContext, "Menú de trucos cerrado", Toast.LENGTH_LONG).show();
@@ -222,15 +223,16 @@ public class CkHomuraMenu {
             return false;
         });
 
-        //********** Close button **********
+        //********** Minimize button (right) - collapses to floating icon **********
         RelativeLayout.LayoutParams lParamsCloseBtn = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lParamsCloseBtn.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
         Button closeBtn = new Button(context);
         closeBtn.setLayoutParams(lParamsCloseBtn);
         closeBtn.setBackgroundColor(Color.TRANSPARENT);
-        closeBtn.setText("\u2715");
+        closeBtn.setText("\u2212"); // − minus - minimize/collapse
         closeBtn.setTextColor(TEXT_COLOR);
+        closeBtn.setTypeface(Typeface.DEFAULT_BOLD);
         closeBtn.setOnClickListener(view -> {
 
             mCollapsed.setVisibility(View.VISIBLE);
@@ -543,14 +545,17 @@ public class CkHomuraMenu {
                         ToggleOFF // OFF
                 }
         );
-        //Set colors of the switch. Comment out if you don't like it
+        //Set colors of the switch. Comment out if you don't like it.
+        //Use setButtonTintList (API 23+) which reliably recolors the thumb/track
+        //on modern devices where getThumbDrawable()/getTrackDrawable() return null.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            try {
-                switchR.getThumbDrawable().setTintList(buttonStates);
-                switchR.getTrackDrawable().setTintList(buttonStates);
-            } catch (NullPointerException ex) {
-                Log.d(TAG, String.valueOf(ex));
-            }
+            Drawable thumb = switchR.getThumbDrawable();
+            Drawable track = switchR.getTrackDrawable();
+            if (thumb != null) thumb.setTintList(buttonStates);
+            if (track != null) track.setTintList(buttonStates);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            switchR.setButtonTintList(buttonStates);
         }
         switchR.setText(featName);
         switchR.setTextColor(TEXT_COLOR_2);

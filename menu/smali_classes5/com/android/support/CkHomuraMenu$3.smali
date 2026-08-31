@@ -57,7 +57,7 @@
         }
     .end annotation
 
-    .line 680
+    .line 685
     iput-object p1, p0, Lcom/android/support/CkHomuraMenu$3;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iput-boolean p2, p0, Lcom/android/support/CkHomuraMenu$3;->val$finalIsOn:Z
@@ -70,7 +70,7 @@
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 681
+    .line 686
     iput-boolean p2, p0, Lcom/android/support/CkHomuraMenu$3;->isOn:Z
 
     return-void
@@ -81,7 +81,7 @@
 .method public onClick(Landroid/view/View;)V
     .registers 4
 
-    .line 684
+    .line 689
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$3;->val$finalfeatName:Ljava/lang/String;
 
     iget v0, p0, Lcom/android/support/CkHomuraMenu$3;->val$featNum:I
@@ -90,12 +90,12 @@
 
     invoke-static {p1, v0, v1}, Lcom/android/support/Preferences;->changeFeatureBool(Ljava/lang/String;IZ)V
 
-    .line 686
+    .line 691
     iget-boolean p1, p0, Lcom/android/support/CkHomuraMenu$3;->isOn:Z
 
-    if-eqz p1, :cond_38
+    if-eqz p1, :cond_36
 
-    .line 687
+    .line 692
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$3;->val$button:Landroid/widget/Button;
 
     new-instance v0, Ljava/lang/StringBuilder;
@@ -106,13 +106,9 @@
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v0
-
     const-string v1, ": ON"
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
 
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -124,7 +120,7 @@
 
     invoke-virtual {p1, v0}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 688
+    .line 693
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$3;->val$button:Landroid/widget/Button;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu$3;->this$0:Lcom/android/support/CkHomuraMenu;
@@ -135,13 +131,13 @@
 
     const/4 p1, 0x0
 
-    .line 689
+    .line 694
     iput-boolean p1, p0, Lcom/android/support/CkHomuraMenu$3;->isOn:Z
 
     return-void
 
-    .line 691
-    :cond_38
+    .line 696
+    :cond_36
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$3;->val$button:Landroid/widget/Button;
 
     new-instance v0, Ljava/lang/StringBuilder;
@@ -152,13 +148,9 @@
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v0
-
     const-string v1, ": OFF"
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
 
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -170,7 +162,7 @@
 
     invoke-virtual {p1, v0}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 692
+    .line 697
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$3;->val$button:Landroid/widget/Button;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu$3;->this$0:Lcom/android/support/CkHomuraMenu;
@@ -181,7 +173,7 @@
 
     const/4 p1, 0x1
 
-    .line 693
+    .line 698
     iput-boolean p1, p0, Lcom/android/support/CkHomuraMenu$3;->isOn:Z
 
     return-void
