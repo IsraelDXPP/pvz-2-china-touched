@@ -64,10 +64,18 @@ int64_t RetTrue()
     return 1;
 }
 
-static bool    sCheatMenuOpen  = true;
-static int     gCheatsEnabled  = 1;
+static bool    sCheatMenuOpen  = false;
+static int     gCheatsEnabled  = 0;
 static int     sCheatTaps      = 0;
 static int64_t sCheatTapLastUs = 0;
+static int64_t sBootUs         = 0;
+
+static int64_t NowUs()
+{
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return (int64_t)ts.tv_sec * 1000000000ll + ts.tv_nsec;
+}
 
 static JavaVM *g_jvm = nullptr;
 
@@ -143,6 +151,17 @@ int64_t MyGameStateMgrDraw(void *self, void *g)
             fnFillRect(g, 6, 6, 96, 16);
         }
     }
+
+    // Auto-arm: activar cheats de forma segura una vez terminado el bootstrap
+    // (20s tras el arranque). Evita el SIGSEGV del login/red si se encienden
+    // durante el arranque.
+    if (!sCheatMenuOpen && sBootUs != 0 && NowUs() - sBootUs >= 20000000000ll)
+    {
+        sCheatMenuOpen = true;
+        gCheatsEnabled = 1;
+        DoToast("CHEATS: ON");
+        LOGI("MyGameStateMgrDraw: cheats activados automaticamente (boot+20s)");
+    }
     return ret;
 }
 
@@ -160,6 +179,13 @@ static void ToggleCheatMenu()
         return;
     }
     sCheatMenuOpen = !sCheatMenuOpen;
+    if (sCheatMenuOpen && (sBootUs == 0 || NowUs() - sBootUs < 20000000000ll))
+    {
+        // Ventana protegida: no activar cheats durante el bootstrap de arranque.
+        sCheatMenuOpen = false;
+        LOGI("ToggleCheatMenu: ignorado, ventana de arranque protegida");
+        return;
+    }
     gCheatsEnabled = sCheatMenuOpen;
     fnSetVisible(fnGetPanel(), sCheatMenuOpen);
     DoToast(sCheatMenuOpen ? "CHEATS: ON" : "CHEATS: OFF");
@@ -235,6 +261,7 @@ void mainFunc()
     LOGI("libSrcExt: entrada de extension cargada");
     g_hookOk   = 0;
     g_hookFail = 0;
+    sBootUs    = NowUs();
 
     SafeHook("_ZN4Sexy21AndroidAntiHackDriver19GetDigitalSignatureEv",
         (void *)GetDigitalSignature);
