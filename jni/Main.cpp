@@ -63,12 +63,13 @@ int64_t RetTrue()
     return 1;
 }
 
-// --- Estado de los trucos del menu (feature ids: 1..5) ---
-static volatile int g_infiniteSun   = 0;  // 1_Toggle (boton) -> no consume sol
-static volatile int g_addSunPending = 0;  // 2_Button  +1000 (se consume en Board::Update)
-static volatile int g_freePlants    = 0;  // 3_Toggle  -> plantas y sol gratis
-static volatile int g_noCooldown    = 0;  // 4_Toggle  -> cooldown de tarjetas a 0
-static volatile int g_victoryPending= 0;  // 5_Button  -> victoria inmediata (Board::Update)
+// --- Estado de los trucos del menu (feature ids: 1..6) ---
+static volatile int g_infiniteSun       = 0;  // 1_Toggle -> contador de sol fijo en 9990 (no baja)
+static volatile int g_addSunPending     = 0;  // 2_Button  +1000 (se consume en Board::Update)
+static volatile int g_freePlants        = 0;  // 3_Toggle  -> plantar sin gastar sol (free planting)
+static volatile int g_noCooldown        = 0;  // 4_Toggle  -> cooldown de tarjetas a 0
+static volatile int g_victoryPending    = 0;  // 5_Button  -> victoria inmediata (Board::Update)
+static volatile int g_unlockPlantsPending = 0; // 6_Button  -> desbloquear todas las plantas (Board::Update)
 
 // --- Natives del menu (com.android.support.CkHomuraMenu / Preferences) ---
 static const char *gt_featureList[] = {
@@ -77,7 +78,20 @@ static const char *gt_featureList[] = {
     "3_Toggle_Plantas Gratis",
     "4_Toggle_Sin Enfriamiento",
     "5_Button_Victoria Instantánea",
+    "6_Button_Desbloquear Todas las Plantas",
 };
+
+// --- Offsets de campos estructurales, dependientes de ABI ---
+// El mismo Main.cpp compila para arm64-v8a Y armeabi-v7a. El emulador (MuMu)
+// corre el binario arm32, donde estos offsets difieren de los de arm64.
+// Validados con las cabeceras + reversed de la libSrc de cada ABI.
+#if defined(__aarch64__)
+#define BOARD_SUN_OFFSET         0x1B8  // Board::m_sunCurrency (arm64: 440)
+#define SEED_COOLDOWN_END_OFFSET 0x194  // SeedPacket::m_cooldownEndTime (arm64: 404)
+#else
+#define BOARD_SUN_OFFSET         0x124  // Board::m_sunCurrency (arm32: 292)
+#define SEED_COOLDOWN_END_OFFSET 0x11C  // SeedPacket::m_cooldownEndTime (arm32: 284)
+#endif
 
 static const char *gt_settingsList[] = {
     "-1_Toggle_Save Settings on Exit",
@@ -121,6 +135,7 @@ Java_com_android_support_Preferences_Changes(JNIEnv *env, jclass clazz, jobject 
     case 3: g_freePlants = (b == JNI_TRUE); break;
     case 4: g_noCooldown = (b == JNI_TRUE); break;
     case 5: g_victoryPending = 1; break;
+    case 6: g_unlockPlantsPending = 1; break;
     default: break;
     }
     LOGI("Changes(fNum=%d, value=%d, bool=%d)", (int)fNum, (int)value, (int)b);
@@ -138,8 +153,8 @@ static TakeSunMoney_t _TakeSunMoney = nullptr;
 
 bool TakeSunMoneyHook(void *self, int i_amount, bool i_force, bool i_theme)
 {
-    if (g_infiniteSun || g_freePlants)
-        return true;                      // sin dedicción ni mensajes rotos
+    if (g_freePlants)
+        return true;                      // plantar gratis: no se deduce sol
     return _TakeSunMoney(self, i_amount, i_force, i_theme);
 }
 
@@ -148,7 +163,7 @@ static CanTakeSunMoney_t _CanTakeSunMoney = nullptr;
 
 bool CanTakeSunMoneyHook(void *self, int i_amount)
 {
-    if (g_freePlants || g_infiniteSun)
+    if (g_freePlants)
         return true;
     return _CanTakeSunMoney(self, i_amount);
 }
@@ -159,7 +174,7 @@ static updateState_NotReady_t _updateState_NotReady = nullptr;
 void *updateState_NotReadyHook(void *self)
 {
     if (g_noCooldown)
-        *(float *)((char *)self + 404) = 0.0f;  // m_cooldownEndTime -> listo
+        *(float *)((char *)self + SEED_COOLDOWN_END_OFFSET) = 0.0f;  // m_cooldownEndTime -> listo
     return _updateState_NotReady(self);
 }
 
@@ -167,8 +182,12 @@ typedef void (*BoardUpdate_t)(void *self);
 static BoardUpdate_t _BoardUpdate = nullptr;
 typedef void (*BoardAddSunMoney_t)(void *self, int i_amount);
 static BoardAddSunMoney_t _BoardAddSunMoney = nullptr;
+typedef void (*BoardSetSunMoney_t)(void *self, int i_amount);
+static BoardSetSunMoney_t _BoardSetSunMoney = nullptr;
 typedef void (*BoardPlayerWon_t)(void *self);
 static BoardPlayerWon_t _BoardPlayerWon = nullptr;
+typedef void (*UnlockAllPlants_t)();      // PVZCheats::UnlockAllPlants() — sin argumentos (mangled _Ev)
+static UnlockAllPlants_t _UnlockAllPlants = nullptr;
 
 void BoardUpdateHook(void *self)
 {
@@ -178,13 +197,29 @@ void BoardUpdateHook(void *self)
         if (_BoardAddSunMoney)
             _BoardAddSunMoney(self, amount);
     }
-    if (g_victoryPending
-            && *(int *)((char *)self + 0x104) != 0xA          // no en ended
-            && *(int *)((char *)self + 0xAC0) == 0) {         // no ya ganado
+
+    // Sol infinito: mantener el contador clavado en 9990 mientras este activo.
+    if (g_infiniteSun && _BoardSetSunMoney) {
+        int cur = *(int *)((char *)self + BOARD_SUN_OFFSET);
+        if (cur < 9990)
+            _BoardSetSunMoney(self, 9990);
+    }
+
+    // Victoria instantanea: el flujo real del juego (Board::PlayerWon) se encarga
+    // de todas las recompensas / red / perfil. Se invoca una unica vez por pulsacion.
+    if (g_victoryPending) {
         g_victoryPending = 0;
         if (_BoardPlayerWon)
             _BoardPlayerWon(self);
     }
+
+    // Desbloquear todas las plantas: PVZCheats::UnlockAllPlants (self-contained).
+    if (g_unlockPlantsPending) {
+        g_unlockPlantsPending = 0;
+        if (_UnlockAllPlants)
+            _UnlockAllPlants();
+    }
+
     _BoardUpdate(self);
 }
 
@@ -265,13 +300,19 @@ void mainFunc()
     SafeHook("_ZN5Board6UpdateEv",
         (void *)BoardUpdateHook, (void **)&_BoardUpdate);
 
-    // Apuntadores helper (sin hookear): AddSunMoney y PlayerWon
+    // Apuntadores helper (sin hookear): AddSunMoney, SetSunMoney, PlayerWon y UnlockAllPlants
     _BoardAddSunMoney = (BoardAddSunMoney_t)SafeResolve("_ZN5Board11AddSunMoneyEi");
+    _BoardSetSunMoney = (BoardSetSunMoney_t)SafeResolve("_ZN5Board11SetSunMoneyEi");
     _BoardPlayerWon  = (BoardPlayerWon_t)SafeResolve("_ZN5Board9PlayerWonEv");
+    _UnlockAllPlants = (UnlockAllPlants_t)SafeResolve("_ZN9PVZCheats15UnlockAllPlantsEv");
     if (_BoardAddSunMoney == nullptr)
         LOGW("menu: AddSunMoney no resuelto");
+    if (_BoardSetSunMoney == nullptr)
+        LOGW("menu: SetSunMoney no resuelto");
     if (_BoardPlayerWon == nullptr)
         LOGW("menu: PlayerWon no resuelto");
+    if (_UnlockAllPlants == nullptr)
+        LOGW("menu: UnlockAllPlants no resuelto");
 
     LOGI("libSrcExt: hooks instalados (ok=%d, fail=%d)", g_hookOk, g_hookFail);
     LOGI("libSrcExt: listo!");
