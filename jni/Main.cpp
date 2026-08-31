@@ -2,6 +2,7 @@
 #include <dlfcn.h>
 #include <stdint.h>
 #include <time.h>
+#include <jni.h>
 
 #include "LawnApp.h"
 #include "StarConvert.h"
@@ -63,9 +64,87 @@ int64_t RetTrue()
     return 1;
 }
 
-static bool    sCheatMenuOpen  = false;
+static bool    sCheatMenuOpen  = true;
+static int     gCheatsEnabled  = 1;
 static int     sCheatTaps      = 0;
 static int64_t sCheatTapLastUs = 0;
+
+static JavaVM *g_jvm = nullptr;
+
+int64_t MyIsAbstract()
+{
+    return gCheatsEnabled;
+}
+
+extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
+{
+    g_jvm = vm;
+    return JNI_VERSION_1_6;
+}
+
+static void DoToast(const char *i_text)
+{
+    if (g_jvm == nullptr)
+        return;
+    JNIEnv *env = nullptr;
+    bool attached = false;
+    if (g_jvm->GetEnv((void **)&env, JNI_VERSION_1_6) != JNI_OK)
+    {
+        if (g_jvm->AttachCurrentThread(&env, nullptr) != JNI_OK)
+            return;
+        attached = true;
+    }
+    jclass appClass = env->FindClass("android/app/ActivityThread");
+    jclass toastClass = env->FindClass("android/widget/Toast");
+    if (appClass != nullptr && toastClass != nullptr)
+    {
+        jmethodID getApp = env->GetStaticMethodID(appClass, "currentApplication",
+            "()Landroid/app/Application;");
+        jmethodID makeText = env->GetStaticMethodID(toastClass, "makeText",
+            "(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;");
+        jmethodID show = env->GetMethodID(toastClass, "show", "()V");
+        if (getApp != nullptr && makeText != nullptr && show != nullptr)
+        {
+            jobject app = env->CallStaticObjectMethod(appClass, getApp);
+            jstring msg = env->NewStringUTF(i_text);
+            jobject toast = env->CallStaticObjectMethod(toastClass, makeText, app, msg, 0);
+            env->CallVoidMethod(toast, show);
+            env->DeleteLocalRef(msg);
+            env->DeleteLocalRef(app);
+            env->DeleteLocalRef(toast);
+        }
+    }
+    if (appClass != nullptr)
+        env->DeleteLocalRef(appClass);
+    if (toastClass != nullptr)
+        env->DeleteLocalRef(toastClass);
+    if (attached)
+        g_jvm->DetachCurrentThread();
+}
+
+int64_t (*_GameStateMgrDraw)(void *self, void *graphics);
+int64_t MyGameStateMgrDraw(void *self, void *g)
+{
+    int64_t ret = _GameStateMgrDraw(self, g);
+    if (gCheatsEnabled && g != nullptr)
+    {
+        static void (*fnSetColor)(void *, const void *) = nullptr;
+        static void (*fnFillRect)(void *, int, int, int, int) = nullptr;
+        if (fnSetColor == nullptr)
+            fnSetColor = (void (*)(void *, const void *))
+                SafeResolve("_ZN4Sexy8Graphics8SetColorERKNS_5ColorE");
+        if (fnFillRect == nullptr)
+            fnFillRect = (void (*)(void *, int, int, int, int))
+                SafeResolve("_ZN4Sexy8Graphics8FillRectEiiii");
+        if (fnSetColor != nullptr && fnFillRect != nullptr)
+        {
+            int color[4] = { 36, 120, 40, 255 };
+            fnSetColor(g, (const void *)color);
+            fnFillRect(g, 6, 6, 96, 16);
+        }
+    }
+    return ret;
+}
 
 static void ToggleCheatMenu()
 {
@@ -81,8 +160,11 @@ static void ToggleCheatMenu()
         return;
     }
     sCheatMenuOpen = !sCheatMenuOpen;
+    gCheatsEnabled = sCheatMenuOpen;
     fnSetVisible(fnGetPanel(), sCheatMenuOpen);
-    LOGI("ToggleCheatMenu: menu debug %s", sCheatMenuOpen ? "abierto" : "cerrado");
+    DoToast(sCheatMenuOpen ? "CHEATS: ON" : "CHEATS: OFF");
+    LOGI("ToggleCheatMenu: cheats=%d menu_debug=%s", gCheatsEnabled,
+        sCheatMenuOpen ? "abierto" : "cerrado");
 }
 
 int64_t (*_LawnAppTouchBegan)(void *self, const void *touch);
@@ -185,6 +267,12 @@ void mainFunc()
     // Menu debug/cheat del motor (CheatUIPanel). Forzar el guard de red para que
     // SetVisible(true) abra el menu de verdad y no muestre el dialogo de sincronizacion.
     SafeHook("_ZN14NetworkItemMgr27HasNetworkCacheSyncCompleteEv", (void *)RetTrue);
+    // Master switch real de cheats del engine "touched": todos los sitios de cheat
+    // (plantar gratis, poder de fuego ilimitado, etc.) leen INetworkData::IsAbstract().
+    SafeHook("_ZNK12INetworkData10IsAbstractEv", (void *)MyIsAbstract);
+    // Badge por-frame cuando los cheats estan activos.
+    SafeHook("_ZN12GameStateMgr4DrawEPN4Sexy8GraphicsE",
+        (void *)MyGameStateMgrDraw, (void **)&_GameStateMgrDraw);
     // Apertura del menu: 5 toques rapidos en la esquina superior izquierda.
     SafeHook("_ZN7LawnApp10TouchBeganERKN4Sexy5TouchE",
         (void *)MyLawnAppTouchBegan, (void **)&_LawnAppTouchBegan);
