@@ -267,12 +267,20 @@ public class CkHomuraMenu {
 
     public void SetWindowManagerActivity() {
         SharedPreferences sharedPreferences = getContext.getSharedPreferences("data", 0);
+
+        int windowType;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            windowType = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            windowType = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+
         vmParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 sharedPreferences.getInt("menuX", POS_X),
                 sharedPreferences.getInt("menuY", POS_Y),
-                WindowManager.LayoutParams.TYPE_APPLICATION_PANEL,
+                windowType,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                         WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
                         WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
