@@ -1,6 +1,7 @@
 #include <android/log.h>
 #include <dlfcn.h>
 #include <stdint.h>
+#include <time.h>
 
 #include "LawnApp.h"
 #include "StarConvert.h"
@@ -55,6 +56,61 @@ bool IsForbiddenPlatform()
 int64_t RetZero()
 {
     return 0;
+}
+
+int64_t RetTrue()
+{
+    return 1;
+}
+
+static bool    sCheatMenuOpen  = false;
+static int     sCheatTaps      = 0;
+static int64_t sCheatTapLastUs = 0;
+
+static void ToggleCheatMenu()
+{
+    static void *(*fnGetPanel)() = nullptr;
+    static void  (*fnSetVisible)(void *, bool) = nullptr;
+    if (fnGetPanel == nullptr)
+        fnGetPanel = (void *(*)())SafeResolve("_ZN4Sexy13LazySingletonI12CheatUIPanelE14GetInstancePtrEv");
+    if (fnSetVisible == nullptr)
+        fnSetVisible = (void (*)(void *, bool))SafeResolve("_ZN12CheatUIPanel10SetVisibleEb");
+    if (fnGetPanel == nullptr || fnSetVisible == nullptr)
+    {
+        LOGE("ToggleCheatMenu: no se pudo resolver CheatUIPanel::GetInstancePtr/SetVisible");
+        return;
+    }
+    sCheatMenuOpen = !sCheatMenuOpen;
+    fnSetVisible(fnGetPanel(), sCheatMenuOpen);
+    LOGI("ToggleCheatMenu: menu debug %s", sCheatMenuOpen ? "abierto" : "cerrado");
+}
+
+int64_t (*_LawnAppTouchBegan)(void *self, const void *touch);
+int64_t MyLawnAppTouchBegan(void *self, const void *touch)
+{
+    int64_t ret = _LawnAppTouchBegan(self, touch);
+
+    int x = *(const int *)((const char *)touch + 16);
+    int y = *(const int *)((const char *)touch + 20);
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    int64_t now = (int64_t)ts.tv_sec * 1000000000ll + ts.tv_nsec;
+    if (x >= 0 && y >= 0 && x < 120 && y < 120)
+    {
+        if (now - sCheatTapLastUs > 600000000ll)
+            sCheatTaps = 0;
+        sCheatTapLastUs = now;
+        if (++sCheatTaps >= 5)
+        {
+            sCheatTaps = 0;
+            ToggleCheatMenu();
+        }
+    }
+    else
+    {
+        sCheatTaps = 0;
+    }
+    return ret;
 }
 
 void TryCheckAccount()
@@ -125,6 +181,13 @@ void mainFunc()
         (void *)RetZero);
     SafeHook("_ZN7LawnApp17ShowPlantFamilyUIEi",
         (void *)RetZero);
+
+    // Menu debug/cheat del motor (CheatUIPanel). Forzar el guard de red para que
+    // SetVisible(true) abra el menu de verdad y no muestre el dialogo de sincronizacion.
+    SafeHook("_ZN14NetworkItemMgr27HasNetworkCacheSyncCompleteEv", (void *)RetTrue);
+    // Apertura del menu: 5 toques rapidos en la esquina superior izquierda.
+    SafeHook("_ZN7LawnApp10TouchBeganERKN4Sexy5TouchE",
+        (void *)MyLawnAppTouchBegan, (void **)&_LawnAppTouchBegan);
 
     LOGI("libSrcExt: hooks instalados (ok=%d, fail=%d)", g_hookOk, g_hookFail);
     LOGI("libSrcExt: listo!");
