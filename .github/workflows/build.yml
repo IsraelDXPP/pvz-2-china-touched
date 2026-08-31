@@ -1,10 +1,11 @@
 name: build-n-publish
 
 # Pipeline completo de PvZ2 China Touched:
-#   1. Descarga el APK ORIGINAL (conto talkweb securitypay) desde Google Drive
-#   2. SWAP: reemplaza lib/arm64-v8a/libSrc.so (73MB stock) y
-#      lib/armeabi-v7a/libSrc.so (45MB stock) por los motores "touched"
-#      (104MB / 77MB, exportan los simbolos C++ que los hooks necesitan)
+#   1. Descarga el APK BASE desde MediaFire
+#      (ej. PvZ2CH_Offline_Mod_v2_arm64.apk, package com.popcap.pvz2cthdbk)
+#   2. SWAP: reemplaza lib/arm64-v8a/libSrc.so y lib/armeabi-v7a/libSrc.so
+#      por los motores "touched" (exportan los simbolos C++ que los hooks
+#      necesitan; si la base ya trae el motor touched, el swap es no-op)
 #   3. Compila libSrcExt.so (Main.cpp, NDK r14b = mismo gcc 4.9/gnustl
 #      que r10e, el unico NDK viejo que dl.google.com aun hospeda)
 #      para arm64-v8a (And64InlineHook) y armeabi-v7a (Arm32InlineHook)
@@ -21,9 +22,10 @@ on:
     inputs:
       apk_source:
         description: >-
-          URL o file-id de Google Drive del APK original
-          (com.talkweb.securitypay.TwApplication.apk)
+          URL de MediaFire del APK base
+          (tipo https://www.mediafire.com/file/<id>/<name>/file)
         required: true
+        default: https://www.mediafire.com/file/a0nes96qvrmih6y/PvZ2CH_Offline_Mod_v2_arm64.apk/file
       apk_name:
         description: Nombre del APK de salida
         required: false
@@ -62,19 +64,32 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Descargar APK original desde Google Drive
+      - name: Descargar APK base (MediaFire)
         run: |
           set -euo pipefail
-          python3 -m pip install --quiet --upgrade gdown || true
           SRC="${{ inputs.apk_source }}"
-          ID=$(printf '%s' "$SRC" | grep -oE '[A-Za-z0-9_-]{25,}' | head -1)
-          if [ -z "$ID" ]; then
-            echo "::error::No se pudo extraer un file-id de Google Drive: $SRC"
-            echo "Usa una URL tipo https://drive.google.com/file/d/<ID>/view"
-            exit 1
-          fi
-          echo "Google Drive file-id: $ID"
-          gdown --continue -O original.apk "$ID"
+          case "$SRC" in
+            *mediafire.com*)
+              echo "Fuente: MediaFire"
+              PAGE="$(curl -fsSL --max-time 120 "$SRC" || true)"
+              if [ -z "$PAGE" ]; then
+                echo "::error::No se pudo obtener la pagina de MediaFire: $SRC"
+                exit 1
+              fi
+              DL="$(printf '%s' "$PAGE" | grep -oE 'https://download[0-9]+\.mediafire\.com/[^"]+' | head -1)"
+              if [ -z "$DL" ]; then
+                echo "::error::No se hallo enlace directo (downloadNN.mediafire.com) en $SRC"
+                exit 1
+              fi
+              echo "Enlace directo: $DL"
+              curl -fSL --retry 3 --retry-delay 5 -o original.apk "$DL"
+              ;;
+            *)
+              echo "Host no reconocido en: $SRC" >&2
+              echo "Usa una URL de MediaFire: https://www.mediafire.com/file/<id>/<name>/file" >&2
+              exit 1
+              ;;
+          esac
           ls -la original.apk
           echo "sha256 original:"; sha256sum original.apk
           SZ=$(stat -c%s original.apk)
@@ -125,7 +140,7 @@ jobs:
           echo "hash libSrc.so TOUCHED (prebuilt):"
           sha256sum prebuilt/arm64-v8a/libSrc.so prebuilt/armeabi-v7a/libSrc.so
 
-      - name: SWAP libSrc.so (stock -> touched, ambas ABIs)
+      - name: SWAP libSrc.so (touched, ambas ABIs)
         run: |
           set -euo pipefail
           cp -v prebuilt/arm64-v8a/libSrc.so  ws/lib/arm64-v8a/libSrc.so
@@ -220,7 +235,7 @@ jobs:
           name: ${{ inputs.release_title }}
           body: |
             PvZ2 China Touched (offline) — build automática.
-            - Motor: swap libSrc.so en arm64-v8a (73MB -> 104MB) y armeabi-v7a (45MB -> 77MB)
+            - Motor: libSrc.so touched en arm64-v8a y armeabi-v7a (símbolos exportados; 13/13
             - Hooks nativos libSrcExt.so (Main.cpp): firma, offline, SyncPlayerInfoFinish,
               Lua engine desactivado, tutoriales/comodines (arm64: And64InlineHook, v7a: Arm32InlineHook)
             - Smali: loadLibrary("SrcExt") en todos los puntos de carga + TalkwebProxy con login offline (UserInfo falso)

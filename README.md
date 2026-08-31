@@ -49,7 +49,7 @@ Los hooks viven en:
 
 ## Pipeline
 
-1. **Entrada**: URL o file-id de Google Drive del APK original (~1.2 GB).
+1. **Entrada**: URL de MediaFire del APK base (~1.2 GB).
 2. **Nativo**: NDK → `libs/<ABI>/libSrcExt.so` (Main.cpp + hook según ABI).
    CI usa NDK **r14b** (mismo gcc 4.9 + gnustl_static; Google ya no hospeda r10e en `dl.google.com`).
 3. **Decodificar**: `apktool d -f -o ws original.apk`.
@@ -72,15 +72,15 @@ Los hooks viven en:
 
 | Input | Descripción |
 |-------|-------------|
-| `apk_source` *(obligatorio)* | URL de Google Drive o file-id del APK original |
+| `apk_source` *(obligatorio)* | URL de MediaFire del APK base (`https://www.mediafire.com/file/<id>/<name>/file`) |
 | `apk_name` | Nombre del APK final (default `PvZ2CH_Touched.apk`) |
 | `app_label` | Nombre que se ve en el launcher al instalar (default `PvZ2CH Touched`) |
 | `release_tag` | Tag para publicar GitHub Release (vacío = solo artifact) |
 | `release_title` | Título del release (default `PvZ2 China Touched (offline)`) |
 
-Ejemplo de `apk_source`:
+Ejemplo de `apk_source` (MediaFire):
 ```
-https://drive.google.com/file/d/1JPAh9GNGTTevbe27tOQ8NBMjICgojM5C/view?usp=sharing
+https://www.mediafire.com/file/a0nes96qvrmih6y/PvZ2CH_Offline_Mod_v2_arm64.apk/file
 ```
 
 ## Uso — Local
