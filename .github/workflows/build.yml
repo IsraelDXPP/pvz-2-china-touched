@@ -28,6 +28,10 @@ on:
         description: Nombre del APK de salida
         required: false
         default: PvZ2CH_Touched.apk
+      app_label:
+        description: Nombre que se ve instalado (launcher)
+        required: false
+        default: PvZ2CH Touched
       release_tag:
         description: Tag para crear GitHub Release (vacio = solo artifact)
         required: false
@@ -148,6 +152,12 @@ jobs:
         run: |
           set -euo pipefail
           python3 patch/patch_talkweb.py ws/smali/com/talkweb/twOfflineSdk/TalkwebProxy.smali
+
+      - name: Renombrar la app instalada (launcher)
+        run: |
+          set -euo pipefail
+          python3 patch/patch_appname.py ws "${{ inputs.app_label }}"
+          grep -o 'android:label="[^"]*"' ws/AndroidManifest.xml | head -3
 
       - name: Rebuild APK (apktool b)
         run: |

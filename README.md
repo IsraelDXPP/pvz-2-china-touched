@@ -74,6 +74,7 @@ Los hooks viven en:
 |-------|-------------|
 | `apk_source` *(obligatorio)* | URL de Google Drive o file-id del APK original |
 | `apk_name` | Nombre del APK final (default `PvZ2CH_Touched.apk`) |
+| `app_label` | Nombre que se ve en el launcher al instalar (default `PvZ2CH Touched`) |
 | `release_tag` | Tag para publicar GitHub Release (vacío = solo artifact) |
 | `release_title` | Título del release (default `PvZ2 China Touched (offline)`) |
 
