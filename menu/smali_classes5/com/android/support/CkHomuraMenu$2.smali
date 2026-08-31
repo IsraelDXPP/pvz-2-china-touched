@@ -55,7 +55,7 @@
         }
     .end annotation
 
-    .line 584
+    .line 592
     iput-object p1, p0, Lcom/android/support/CkHomuraMenu$2;->this$0:Lcom/android/support/CkHomuraMenu;
 
     iput p2, p0, Lcom/android/support/CkHomuraMenu$2;->val$min:I
@@ -76,7 +76,7 @@
 .method public onProgressChanged(Landroid/widget/SeekBar;IZ)V
     .registers 5
 
-    .line 593
+    .line 601
     iget p3, p0, Lcom/android/support/CkHomuraMenu$2;->val$min:I
 
     invoke-static {p2, p3}, Ljava/lang/Math;->max(II)I
@@ -85,7 +85,7 @@
 
     invoke-virtual {p1, p3}, Landroid/widget/SeekBar;->setProgress(I)V
 
-    .line 594
+    .line 602
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$2;->val$featName:Ljava/lang/String;
 
     iget p3, p0, Lcom/android/support/CkHomuraMenu$2;->val$featNum:I
@@ -98,7 +98,7 @@
 
     invoke-static {p1, p3, v0}, Lcom/android/support/Preferences;->changeFeatureInt(Ljava/lang/String;II)V
 
-    .line 595
+    .line 603
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu$2;->val$textView:Landroid/widget/TextView;
 
     new-instance p3, Ljava/lang/StringBuilder;
@@ -109,9 +109,13 @@
 
     invoke-virtual {p3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p3
+
     const-string v0, ": <font color=\'"
 
     invoke-virtual {p3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p3
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu$2;->this$0:Lcom/android/support/CkHomuraMenu;
 
@@ -119,9 +123,13 @@
 
     invoke-virtual {p3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p3
+
     const-string v0, "\'>"
 
     invoke-virtual {p3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p3
 
     iget v0, p0, Lcom/android/support/CkHomuraMenu$2;->val$min:I
 
@@ -131,7 +139,9 @@
 
     invoke-virtual {p3, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    invoke-virtual {p3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result-object p2
+
+    invoke-virtual {p2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object p2
 

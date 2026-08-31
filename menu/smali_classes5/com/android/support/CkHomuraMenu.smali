@@ -801,14 +801,14 @@
 .method private Button(Landroid/widget/LinearLayout;ILjava/lang/String;)V
     .registers 8
 
-    .line 605
+    .line 613
     new-instance v0, Landroid/widget/Button;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/Button;-><init>(Landroid/content/Context;)V
 
-    .line 606
+    .line 614
     new-instance v1, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v2, -0x1
@@ -819,42 +819,42 @@
 
     const/4 v3, 0x5
 
-    .line 607
+    .line 615
     invoke-virtual {v1, v2, v3, v2, v3}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
-    .line 608
+    .line 616
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 609
+    .line 617
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setTextColor(I)V
 
     const/4 v1, 0x0
 
-    .line 611
+    .line 619
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setAllCaps(Z)V
 
-    .line 613
+    .line 621
     invoke-static {p3}, Landroid/text/Html;->fromHtml(Ljava/lang/String;)Landroid/text/Spanned;
 
     move-result-object v1
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 614
+    .line 622
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->BTN_COLOR:I
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setBackgroundColor(I)V
 
-    .line 615
+    .line 623
     new-instance v1, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda2;
 
     invoke-direct {v1, p0, p2, p3}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda2;-><init>(Lcom/android/support/CkHomuraMenu;ILjava/lang/String;)V
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 627
+    .line 635
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -863,14 +863,14 @@
 .method private ButtonLink(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;)V
     .registers 8
 
-    .line 631
+    .line 639
     new-instance v0, Landroid/widget/Button;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/Button;-><init>(Landroid/content/Context;)V
 
-    .line 632
+    .line 640
     new-instance v1, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v2, -0x1
@@ -881,42 +881,42 @@
 
     const/4 v3, 0x5
 
-    .line 633
+    .line 641
     invoke-virtual {v1, v2, v3, v2, v3}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
-    .line 634
+    .line 642
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
     const/4 v1, 0x0
 
-    .line 636
+    .line 644
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setAllCaps(Z)V
 
-    .line 638
+    .line 646
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setTextColor(I)V
 
-    .line 639
+    .line 647
     invoke-static {p2}, Landroid/text/Html;->fromHtml(Ljava/lang/String;)Landroid/text/Spanned;
 
     move-result-object p2
 
     invoke-virtual {v0, p2}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 640
+    .line 648
     iget p2, p0, Lcom/android/support/CkHomuraMenu;->BTN_COLOR:I
 
     invoke-virtual {v0, p2}, Landroid/widget/Button;->setBackgroundColor(I)V
 
-    .line 641
+    .line 649
     new-instance p2, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda6;
 
     invoke-direct {p2, p0, p3}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda6;-><init>(Lcom/android/support/CkHomuraMenu;Ljava/lang/String;)V
 
     invoke-virtual {v0, p2}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 647
+    .line 655
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -925,14 +925,14 @@
 .method private ButtonOnOff(Landroid/widget/LinearLayout;ILjava/lang/String;Z)V
     .registers 11
 
-    .line 651
+    .line 659
     new-instance v5, Landroid/widget/Button;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v5, v0}, Landroid/widget/Button;-><init>(Landroid/content/Context;)V
 
-    .line 652
+    .line 660
     new-instance v0, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v1, -0x1
@@ -943,23 +943,23 @@
 
     const/4 v2, 0x5
 
-    .line 653
+    .line 661
     invoke-virtual {v0, v1, v2, v1, v2}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
-    .line 654
+    .line 662
     invoke-virtual {v5, v0}, Landroid/widget/Button;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 655
+    .line 663
     iget v0, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v5, v0}, Landroid/widget/Button;->setTextColor(I)V
 
     const/4 v0, 0x0
 
-    .line 657
+    .line 665
     invoke-virtual {v5, v0}, Landroid/widget/Button;->setAllCaps(Z)V
 
-    .line 660
+    .line 668
     const-string v1, "OnOff_"
 
     const-string v2, ""
@@ -968,23 +968,27 @@
 
     move-result-object v3
 
-    .line 661
+    .line 669
     invoke-static {p3, p2, p4}, Lcom/android/support/Preferences;->loadPrefBool(Ljava/lang/String;IZ)Z
 
     move-result p3
 
-    if-eqz p3, :cond_4b
+    if-eqz p3, :cond_4d
 
-    .line 663
+    .line 671
     new-instance p3, Ljava/lang/StringBuilder;
 
     invoke-direct {p3}, Ljava/lang/StringBuilder;-><init>()V
 
     invoke-virtual {p3, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p3
+
     const-string p4, ": ON"
 
     invoke-virtual {p3, p4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p3
 
     invoke-virtual {p3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -996,26 +1000,30 @@
 
     invoke-virtual {v5, p3}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 664
+    .line 672
     iget p3, p0, Lcom/android/support/CkHomuraMenu;->BtnON:I
 
     invoke-virtual {v5, p3}, Landroid/widget/Button;->setBackgroundColor(I)V
 
     const/4 v2, 0x0
 
-    goto :goto_6a
+    goto :goto_6e
 
-    .line 667
-    :cond_4b
+    .line 675
+    :cond_4d
     new-instance p3, Ljava/lang/StringBuilder;
 
     invoke-direct {p3}, Ljava/lang/StringBuilder;-><init>()V
 
     invoke-virtual {p3, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p3
+
     const-string p4, ": OFF"
 
     invoke-virtual {p3, p4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p3
 
     invoke-virtual {p3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -1027,7 +1035,7 @@
 
     invoke-virtual {v5, p3}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 668
+    .line 676
     iget p3, p0, Lcom/android/support/CkHomuraMenu;->BtnOFF:I
 
     invoke-virtual {v5, p3}, Landroid/widget/Button;->setBackgroundColor(I)V
@@ -1036,8 +1044,8 @@
 
     const/4 v2, 0x1
 
-    .line 672
-    :goto_6a
+    .line 680
+    :goto_6e
     new-instance v0, Lcom/android/support/CkHomuraMenu$3;
 
     move-object v1, p0
@@ -1048,7 +1056,7 @@
 
     invoke-virtual {v5, v0}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 689
+    .line 697
     invoke-virtual {p1, v5}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1057,19 +1065,19 @@
 .method private Category(Landroid/widget/LinearLayout;Ljava/lang/String;)V
     .registers 5
 
-    .line 972
+    .line 980
     new-instance v0, Landroid/widget/TextView;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 973
+    .line 981
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->CategoryBG:I
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setBackgroundColor(I)V
 
-    .line 974
+    .line 982
     invoke-static {p2}, Landroid/text/Html;->fromHtml(Ljava/lang/String;)Landroid/text/Spanned;
 
     move-result-object p2
@@ -1078,10 +1086,10 @@
 
     const/16 p2, 0x11
 
-    .line 975
+    .line 983
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setGravity(I)V
 
-    .line 976
+    .line 984
     iget p2, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setTextColor(I)V
@@ -1090,17 +1098,17 @@
 
     const/4 v1, 0x1
 
-    .line 977
+    .line 985
     invoke-virtual {v0, p2, v1}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;I)V
 
     const/4 p2, 0x0
 
     const/4 v1, 0x5
 
-    .line 978
+    .line 986
     invoke-virtual {v0, p2, v1, p2, v1}, Landroid/widget/TextView;->setPadding(IIII)V
 
-    .line 979
+    .line 987
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1109,29 +1117,29 @@
 .method private CheckBox(Landroid/widget/LinearLayout;ILjava/lang/String;Z)V
     .registers 8
 
-    .line 863
+    .line 871
     new-instance v0, Landroid/widget/CheckBox;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/CheckBox;-><init>(Landroid/content/Context;)V
 
-    .line 864
+    .line 872
     invoke-virtual {v0, p3}, Landroid/widget/CheckBox;->setText(Ljava/lang/CharSequence;)V
 
-    .line 865
+    .line 873
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v0, v1}, Landroid/widget/CheckBox;->setTextColor(I)V
 
-    .line 866
+    .line 874
     sget v1, Landroid/os/Build$VERSION;->SDK_INT:I
 
     const/16 v2, 0x15
 
     if-lt v1, v2, :cond_1e
 
-    .line 867
+    .line 875
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->CheckBoxColor:I
 
     invoke-static {v1}, Landroid/content/res/ColorStateList;->valueOf(I)Landroid/content/res/ColorStateList;
@@ -1140,7 +1148,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/CheckBox;->setButtonTintList(Landroid/content/res/ColorStateList;)V
 
-    .line 868
+    .line 876
     :cond_1e
     invoke-static {p3, p2, p4}, Lcom/android/support/Preferences;->loadPrefBool(Ljava/lang/String;IZ)Z
 
@@ -1148,14 +1156,14 @@
 
     invoke-virtual {v0, p4}, Landroid/widget/CheckBox;->setChecked(Z)V
 
-    .line 869
+    .line 877
     new-instance p4, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda1;
 
     invoke-direct {p4, v0, p3, p2}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda1;-><init>(Landroid/widget/CheckBox;Ljava/lang/String;I)V
 
     invoke-virtual {v0, p4}, Landroid/widget/CheckBox;->setOnCheckedChangeListener(Landroid/widget/CompoundButton$OnCheckedChangeListener;)V
 
-    .line 876
+    .line 884
     new-instance p2, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 p3, -0x1
@@ -1166,13 +1174,13 @@
 
     const/16 p3, 0x11
 
-    .line 877
+    .line 885
     iput p3, p2, Landroid/widget/LinearLayout$LayoutParams;->gravity:I
 
-    .line 878
+    .line 886
     invoke-virtual {v0, p2}, Landroid/widget/CheckBox;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 879
+    .line 887
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1181,7 +1189,7 @@
 .method private Collapse(Landroid/widget/LinearLayout;Ljava/lang/String;Z)V
     .registers 15
 
-    .line 920
+    .line 928
     new-instance v0, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v1, -0x1
@@ -1192,46 +1200,46 @@
 
     const/4 v2, 0x5
 
-    .line 921
+    .line 929
     invoke-virtual {v0, v1, v2, v1, v1}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
-    .line 923
+    .line 931
     new-instance v3, Landroid/widget/LinearLayout;
 
     iget-object v4, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v3, v4}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 924
+    .line 932
     invoke-virtual {v3, v0}, Landroid/widget/LinearLayout;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
     const/16 v0, 0x10
 
-    .line 925
+    .line 933
     invoke-virtual {v3, v0}, Landroid/widget/LinearLayout;->setVerticalGravity(I)V
 
     const/4 v4, 0x1
 
-    .line 926
+    .line 934
     invoke-virtual {v3, v4}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 928
+    .line 936
     new-instance v8, Landroid/widget/LinearLayout;
 
     iget-object v5, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v8, v5}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 929
+    .line 937
     invoke-virtual {v8, v0}, Landroid/widget/LinearLayout;->setVerticalGravity(I)V
 
-    .line 930
+    .line 938
     invoke-virtual {v8, v1, v2, v1, v2}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
-    .line 931
+    .line 939
     invoke-virtual {v8, v4}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 932
+    .line 940
     const-string v0, "#222D38"
 
     invoke-static {v0}, Landroid/graphics/Color;->parseColor(Ljava/lang/String;)I
@@ -1242,25 +1250,25 @@
 
     const/16 v0, 0x8
 
-    .line 933
+    .line 941
     invoke-virtual {v8, v0}, Landroid/widget/LinearLayout;->setVisibility(I)V
 
-    .line 934
+    .line 942
     iput-object v8, p0, Lcom/android/support/CkHomuraMenu;->mCollapse:Landroid/widget/LinearLayout;
 
-    .line 936
+    .line 944
     new-instance v9, Landroid/widget/TextView;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v9, v0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 937
+    .line 945
     iget v0, p0, Lcom/android/support/CkHomuraMenu;->CategoryBG:I
 
     invoke-virtual {v9, v0}, Landroid/widget/TextView;->setBackgroundColor(I)V
 
-    .line 938
+    .line 946
     new-array v0, v4, [Ljava/lang/Object;
 
     aput-object p2, v0, v1
@@ -1275,30 +1283,30 @@
 
     const/16 v0, 0x11
 
-    .line 939
+    .line 947
     invoke-virtual {v9, v0}, Landroid/widget/TextView;->setGravity(I)V
 
-    .line 940
+    .line 948
     iget v0, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v9, v0}, Landroid/widget/TextView;->setTextColor(I)V
 
     const/4 v0, 0x0
 
-    .line 941
+    .line 949
     invoke-virtual {v9, v0, v4}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;I)V
 
     const/16 v0, 0x14
 
-    .line 942
+    .line 950
     invoke-virtual {v9, v1, v0, v1, v0}, Landroid/widget/TextView;->setPadding(IIII)V
 
     if-eqz p3, :cond_7c
 
-    .line 945
+    .line 953
     invoke-virtual {v8, v1}, Landroid/widget/LinearLayout;->setVisibility(I)V
 
-    .line 946
+    .line 954
     new-array v0, v4, [Ljava/lang/Object;
 
     aput-object p2, v0, v1
@@ -1311,7 +1319,7 @@
 
     invoke-virtual {v9, v0}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 949
+    .line 957
     :cond_7c
     new-instance v5, Lcom/android/support/CkHomuraMenu$5;
 
@@ -1325,13 +1333,13 @@
 
     invoke-virtual {v9, v5}, Landroid/widget/TextView;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 966
+    .line 974
     invoke-virtual {v3, v9}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 967
+    .line 975
     invoke-virtual {v3, v8}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 968
+    .line 976
     invoke-virtual {p1, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1340,17 +1348,17 @@
 .method private FormationCopy(Landroid/widget/LinearLayout;ILjava/lang/String;)V
     .registers 6
 
-    .line 473
+    .line 481
     new-instance p2, Landroid/widget/Button;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {p2, v0}, Landroid/widget/Button;-><init>(Landroid/content/Context;)V
 
-    .line 474
+    .line 482
     invoke-virtual {p2, p3}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 475
+    .line 483
     new-instance p3, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v0, -0x1
@@ -1361,35 +1369,35 @@
 
     const/4 v1, 0x5
 
-    .line 476
+    .line 484
     invoke-virtual {p3, v0, v1, v0, v1}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
-    .line 477
+    .line 485
     invoke-virtual {p2, p3}, Landroid/widget/Button;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 478
+    .line 486
     iget p3, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {p2, p3}, Landroid/widget/Button;->setTextColor(I)V
 
     const/4 p3, 0x0
 
-    .line 480
+    .line 488
     invoke-virtual {p2, p3}, Landroid/widget/Button;->setAllCaps(Z)V
 
-    .line 482
+    .line 490
     iget p3, p0, Lcom/android/support/CkHomuraMenu;->BTN_COLOR:I
 
     invoke-virtual {p2, p3}, Landroid/widget/Button;->setBackgroundColor(I)V
 
-    .line 483
+    .line 491
     new-instance p3, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda19;
 
     invoke-direct {p3, p0}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda19;-><init>(Lcom/android/support/CkHomuraMenu;)V
 
     invoke-virtual {p2, p3}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 489
+    .line 497
     invoke-virtual {p1, p2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1398,14 +1406,14 @@
 .method private InputNum(Landroid/widget/LinearLayout;ILjava/lang/String;I)V
     .registers 15
 
-    .line 731
+    .line 739
     new-instance v0, Landroid/widget/LinearLayout;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 732
+    .line 740
     new-instance v1, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v2, -0x1
@@ -1416,52 +1424,64 @@
 
     const/4 v3, 0x5
 
-    .line 733
+    .line 741
     invoke-virtual {v1, v2, v3, v2, v3}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
-    .line 735
+    .line 743
     new-instance v7, Landroid/widget/Button;
 
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v7, v2}, Landroid/widget/Button;-><init>(Landroid/content/Context;)V
 
-    .line 736
+    .line 744
     invoke-static {p3, p2}, Lcom/android/support/Preferences;->loadPrefInt(Ljava/lang/String;I)I
 
     move-result v2
 
-    .line 737
+    .line 745
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
     invoke-virtual {v3, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object v3
+
     const-string v4, ": <font color=\'"
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     iget-object v4, p0, Lcom/android/support/CkHomuraMenu;->NumberTxtColor:Ljava/lang/String;
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object v3
+
     const-string v4, "\'>"
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    if-nez v2, :cond_37
+    move-result-object v3
+
+    if-nez v2, :cond_3b
 
     const/4 v2, 0x1
 
-    :cond_37
+    :cond_3b
     invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    const-string v2, "</font>"
+    move-result-object v2
 
-    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    const-string v3, "</font>"
 
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v2
 
@@ -1473,23 +1493,23 @@
 
     const/4 v2, 0x0
 
-    .line 739
+    .line 747
     invoke-virtual {v7, v2}, Landroid/widget/Button;->setAllCaps(Z)V
 
-    .line 741
+    .line 749
     invoke-virtual {v7, v1}, Landroid/widget/Button;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 742
+    .line 750
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->BTN_COLOR:I
 
     invoke-virtual {v7, v1}, Landroid/widget/Button;->setBackgroundColor(I)V
 
-    .line 743
+    .line 751
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v7, v1}, Landroid/widget/Button;->setTextColor(I)V
 
-    .line 744
+    .line 752
     new-instance v4, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda0;
 
     move-object v5, p0
@@ -1504,10 +1524,10 @@
 
     invoke-virtual {v7, v4}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 801
+    .line 809
     invoke-virtual {v0, v7}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 802
+    .line 810
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1516,14 +1536,14 @@
 .method private InputText(Landroid/widget/LinearLayout;ILjava/lang/String;)V
     .registers 10
 
-    .line 806
+    .line 814
     new-instance v0, Landroid/widget/LinearLayout;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 807
+    .line 815
     new-instance v1, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v2, -0x1
@@ -1534,47 +1554,59 @@
 
     const/4 v3, 0x5
 
-    .line 808
+    .line 816
     invoke-virtual {v1, v2, v3, v2, v3}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
-    .line 810
+    .line 818
     new-instance v2, Landroid/widget/Button;
 
     iget-object v3, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v2, v3}, Landroid/widget/Button;-><init>(Landroid/content/Context;)V
 
-    .line 812
+    .line 820
     invoke-static {p3, p2}, Lcom/android/support/Preferences;->loadPrefString(Ljava/lang/String;I)Ljava/lang/String;
 
     move-result-object v3
 
-    .line 813
+    .line 821
     new-instance v4, Ljava/lang/StringBuilder;
 
     invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
     invoke-virtual {v4, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object v4
+
     const-string v5, ": <font color=\'"
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
 
     iget-object v5, p0, Lcom/android/support/CkHomuraMenu;->NumberTxtColor:Ljava/lang/String;
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object v4
+
     const-string v5, "\'>"
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v4, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    const-string v3, "</font>"
+    move-result-object v4
 
     invoke-virtual {v4, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result-object v3
+
+    const-string v4, "</font>"
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v3
 
@@ -1586,33 +1618,33 @@
 
     const/4 v3, 0x0
 
-    .line 816
+    .line 824
     invoke-virtual {v2, v3}, Landroid/widget/Button;->setAllCaps(Z)V
 
-    .line 818
+    .line 826
     invoke-virtual {v2, v1}, Landroid/widget/Button;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 819
+    .line 827
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->BTN_COLOR:I
 
     invoke-virtual {v2, v1}, Landroid/widget/Button;->setBackgroundColor(I)V
 
-    .line 820
+    .line 828
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v2, v1}, Landroid/widget/Button;->setTextColor(I)V
 
-    .line 821
+    .line 829
     new-instance v1, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda5;
 
     invoke-direct {v1, p0, v2, p3, p2}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda5;-><init>(Lcom/android/support/CkHomuraMenu;Landroid/widget/Button;Ljava/lang/String;I)V
 
     invoke-virtual {v2, v1}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 858
+    .line 866
     invoke-virtual {v0, v2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 859
+    .line 867
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1621,17 +1653,17 @@
 .method private OnceCheckBox(Landroid/widget/LinearLayout;ILjava/lang/String;)V
     .registers 8
 
-    .line 493
+    .line 501
     new-instance v0, Landroid/widget/Button;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/Button;-><init>(Landroid/content/Context;)V
 
-    .line 494
+    .line 502
     invoke-virtual {v0, p3}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 495
+    .line 503
     new-instance v1, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v2, -0x1
@@ -1642,35 +1674,35 @@
 
     const/4 v3, 0x5
 
-    .line 496
+    .line 504
     invoke-virtual {v1, v2, v3, v2, v3}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
-    .line 497
+    .line 505
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 498
+    .line 506
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setTextColor(I)V
 
     const/4 v1, 0x0
 
-    .line 500
+    .line 508
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setAllCaps(Z)V
 
-    .line 502
+    .line 510
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->BTN_COLOR:I
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setBackgroundColor(I)V
 
-    .line 503
+    .line 511
     new-instance v1, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda20;
 
     invoke-direct {v1, p3, p2}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda20;-><init>(Ljava/lang/String;I)V
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 504
+    .line 512
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1679,7 +1711,7 @@
 .method private RadioButton(Landroid/widget/LinearLayout;ILjava/lang/String;Ljava/lang/String;)V
     .registers 15
 
-    .line 884
+    .line 892
     new-instance v0, Ljava/util/LinkedList;
 
     const-string v1, ","
@@ -1694,7 +1726,7 @@
 
     invoke-direct {v0, p4}, Ljava/util/LinkedList;-><init>(Ljava/util/Collection;)V
 
-    .line 886
+    .line 894
     new-instance v3, Landroid/widget/TextView;
 
     iget-object p4, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
@@ -1703,7 +1735,7 @@
 
     const/4 p4, 0x1
 
-    .line 887
+    .line 895
     new-array v1, p4, [Ljava/lang/Object;
 
     const/4 v2, 0x0
@@ -1718,12 +1750,12 @@
 
     invoke-virtual {v3, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 888
+    .line 896
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v3, v1}, Landroid/widget/TextView;->setTextColor(I)V
 
-    .line 890
+    .line 898
     new-instance v7, Landroid/widget/RadioGroup;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
@@ -1734,18 +1766,18 @@
 
     const/4 v4, 0x5
 
-    .line 891
+    .line 899
     invoke-virtual {v7, v1, v4, v1, v4}, Landroid/widget/RadioGroup;->setPadding(IIII)V
 
-    .line 892
+    .line 900
     invoke-virtual {v7, p4}, Landroid/widget/RadioGroup;->setOrientation(I)V
 
-    .line 893
+    .line 901
     invoke-virtual {v7, v3}, Landroid/widget/RadioGroup;->addView(Landroid/view/View;)V
 
     const/4 v9, 0x0
 
-    .line 895
+    .line 903
     :goto_3e
     invoke-interface {v0}, Ljava/util/List;->size()I
 
@@ -1753,14 +1785,14 @@
 
     if-ge v9, v1, :cond_8e
 
-    .line 896
+    .line 904
     new-instance v8, Landroid/widget/RadioButton;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v8, v1}, Landroid/widget/RadioButton;-><init>(Landroid/content/Context;)V
 
-    .line 897
+    .line 905
     invoke-interface {v0, v9}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v1
@@ -1769,7 +1801,7 @@
 
     check-cast v5, Ljava/lang/String;
 
-    .line 898
+    .line 906
     new-instance v1, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda18;
 
     move-object v2, p0
@@ -1780,7 +1812,7 @@
 
     invoke-direct/range {v1 .. v8}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda18;-><init>(Lcom/android/support/CkHomuraMenu;Landroid/widget/TextView;Ljava/lang/String;Ljava/lang/String;ILandroid/widget/RadioGroup;Landroid/widget/RadioButton;)V
 
-    .line 902
+    .line 910
     sget-object p2, Ljava/lang/System;->out:Ljava/io/PrintStream;
 
     invoke-interface {v0, v9}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -1791,7 +1823,7 @@
 
     invoke-virtual {p2, p3}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
 
-    .line 903
+    .line 911
     invoke-interface {v0, v9}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object p2
@@ -1802,17 +1834,17 @@
 
     const p2, -0x333334
 
-    .line 904
+    .line 912
     invoke-virtual {v8, p2}, Landroid/widget/RadioButton;->setTextColor(I)V
 
-    .line 905
+    .line 913
     sget p2, Landroid/os/Build$VERSION;->SDK_INT:I
 
     const/16 p3, 0x15
 
     if-lt p2, p3, :cond_83
 
-    .line 906
+    .line 914
     iget p2, v2, Lcom/android/support/CkHomuraMenu;->RadioColor:I
 
     invoke-static {p2}, Landroid/content/res/ColorStateList;->valueOf(I)Landroid/content/res/ColorStateList;
@@ -1821,11 +1853,11 @@
 
     invoke-virtual {v8, p2}, Landroid/widget/RadioButton;->setButtonTintList(Landroid/content/res/ColorStateList;)V
 
-    .line 907
+    .line 915
     :cond_83
     invoke-virtual {v8, v1}, Landroid/widget/RadioButton;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 908
+    .line 916
     invoke-virtual {v7, v8}, Landroid/widget/RadioGroup;->addView(Landroid/view/View;)V
 
     add-int/lit8 v9, v9, 0x1
@@ -1843,31 +1875,39 @@
 
     move-object v4, p3
 
-    .line 911
+    .line 919
     invoke-static {v4, v6}, Lcom/android/support/Preferences;->loadPrefInt(Ljava/lang/String;I)I
 
     move-result p2
 
-    if-lez p2, :cond_cd
+    if-lez p2, :cond_d2
 
-    .line 913
+    .line 921
     new-instance p3, Ljava/lang/StringBuilder;
 
     invoke-direct {p3}, Ljava/lang/StringBuilder;-><init>()V
 
     invoke-virtual {p3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p3
+
     const-string v1, ": <font color=\'"
 
     invoke-virtual {p3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p3
 
     iget-object v1, v2, Lcom/android/support/CkHomuraMenu;->NumberTxtColor:Ljava/lang/String;
 
     invoke-virtual {p3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p3
+
     const-string v1, "\'>"
 
     invoke-virtual {p3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p3
 
     add-int/lit8 v1, p2, -0x1
 
@@ -1879,6 +1919,8 @@
 
     invoke-virtual {p3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p3
+
     invoke-virtual {p3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object p3
@@ -1889,7 +1931,7 @@
 
     invoke-virtual {v3, p3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 914
+    .line 922
     invoke-virtual {v7, p2}, Landroid/widget/RadioGroup;->getChildAt(I)Landroid/view/View;
 
     move-result-object p2
@@ -1898,8 +1940,8 @@
 
     invoke-virtual {p2, p4}, Landroid/widget/RadioButton;->setChecked(Z)V
 
-    .line 916
-    :cond_cd
+    .line 924
+    :cond_d2
     invoke-virtual {p1, v7}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -1908,12 +1950,12 @@
 .method private SeekBar(Landroid/widget/LinearLayout;ILjava/lang/String;II)V
     .registers 16
 
-    .line 564
+    .line 572
     invoke-static {p3, p2}, Lcom/android/support/Preferences;->loadPrefInt(Ljava/lang/String;I)I
 
     move-result v0
 
-    .line 565
+    .line 573
     new-instance v6, Landroid/widget/LinearLayout;
 
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
@@ -1926,56 +1968,66 @@
 
     const/16 v7, 0xa
 
-    .line 566
+    .line 574
     invoke-virtual {v6, v7, v2, v5, v2}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
     const/4 v2, 0x1
 
-    .line 567
+    .line 575
     invoke-virtual {v6, v2}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
     const/16 v2, 0x11
 
-    .line 568
+    .line 576
     invoke-virtual {v6, v2}, Landroid/widget/LinearLayout;->setGravity(I)V
 
-    .line 570
+    .line 578
     new-instance v5, Landroid/widget/TextView;
 
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v5, v2}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 571
+    .line 579
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
 
     invoke-virtual {v2, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object v2
+
     const-string v8, ": <font color=\'"
 
     invoke-virtual {v2, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     iget-object v8, p0, Lcom/android/support/CkHomuraMenu;->NumberTxtColor:Ljava/lang/String;
 
     invoke-virtual {v2, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object v2
+
     const-string v8, "\'>"
 
     invoke-virtual {v2, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    if-nez v0, :cond_3d
+    move-result-object v2
+
+    if-nez v0, :cond_41
 
     move v8, p4
 
-    goto :goto_3e
+    goto :goto_42
 
-    :cond_3d
+    :cond_41
     move v8, v0
 
-    :goto_3e
+    :goto_42
     invoke-virtual {v2, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -1987,12 +2039,12 @@
 
     invoke-virtual {v5, v2}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 572
+    .line 580
     iget v2, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v5, v2}, Landroid/widget/TextView;->setTextColor(I)V
 
-    .line 574
+    .line 582
     new-instance v8, Landroid/widget/SeekBar;
 
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
@@ -2003,32 +2055,32 @@
 
     const/16 v9, 0x23
 
-    .line 575
+    .line 583
     invoke-virtual {v8, v2, v7, v9, v7}, Landroid/widget/SeekBar;->setPadding(IIII)V
 
-    .line 576
+    .line 584
     invoke-virtual {v8, p5}, Landroid/widget/SeekBar;->setMax(I)V
 
-    .line 577
+    .line 585
     sget v2, Landroid/os/Build$VERSION;->SDK_INT:I
 
     const/16 v7, 0x1a
 
-    if-lt v2, v7, :cond_6b
+    if-lt v2, v7, :cond_70
 
-    .line 578
+    .line 586
     invoke-virtual {v8, p4}, Landroid/widget/SeekBar;->setMin(I)V
 
-    :cond_6b
-    if-nez v0, :cond_6e
+    :cond_70
+    if-nez v0, :cond_73
 
     move v0, p4
 
-    .line 579
-    :cond_6e
+    .line 587
+    :cond_73
     invoke-virtual {v8, v0}, Landroid/widget/SeekBar;->setProgress(I)V
 
-    .line 581
+    .line 589
     invoke-virtual {v8}, Landroid/widget/SeekBar;->getThumb()Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
@@ -2039,7 +2091,7 @@
 
     invoke-virtual {v0, v7, v9}, Landroid/graphics/drawable/Drawable;->setColorFilter(ILandroid/graphics/PorterDuff$Mode;)V
 
-    .line 583
+    .line 591
     invoke-virtual {v8}, Landroid/widget/SeekBar;->getProgressDrawable()Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
@@ -2050,7 +2102,7 @@
 
     invoke-virtual {v0, v7, v9}, Landroid/graphics/drawable/Drawable;->setColorFilter(ILandroid/graphics/PorterDuff$Mode;)V
 
-    .line 584
+    .line 592
     new-instance v0, Lcom/android/support/CkHomuraMenu$2;
 
     move-object v1, p0
@@ -2065,13 +2117,13 @@
 
     invoke-virtual {v8, v0}, Landroid/widget/SeekBar;->setOnSeekBarChangeListener(Landroid/widget/SeekBar$OnSeekBarChangeListener;)V
 
-    .line 598
+    .line 606
     invoke-virtual {v6, v5}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 599
+    .line 607
     invoke-virtual {v6, v8}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 601
+    .line 609
     invoke-virtual {p1, v6}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -2080,7 +2132,7 @@
 .method private Spinner(Landroid/widget/LinearLayout;ILjava/lang/String;Ljava/lang/String;)V
     .registers 11
 
-    .line 694
+    .line 702
     new-instance v0, Ljava/util/LinkedList;
 
     const-string v1, ","
@@ -2095,14 +2147,14 @@
 
     invoke-direct {v0, p4}, Ljava/util/LinkedList;-><init>(Ljava/util/Collection;)V
 
-    .line 698
+    .line 706
     new-instance p4, Landroid/widget/LinearLayout;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {p4, v1}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 699
+    .line 707
     new-instance v1, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v2, -0x1
@@ -2115,23 +2167,23 @@
 
     const/4 v3, 0x2
 
-    .line 700
+    .line 708
     invoke-virtual {v1, v2, v3, v2, v3}, Landroid/widget/LinearLayout$LayoutParams;->setMargins(IIII)V
 
     const/4 v2, 0x1
 
-    .line 701
+    .line 709
     invoke-virtual {p4, v2}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 702
+    .line 710
     iget v3, p0, Lcom/android/support/CkHomuraMenu;->BTN_COLOR:I
 
     invoke-virtual {p4, v3}, Landroid/widget/LinearLayout;->setBackgroundColor(I)V
 
-    .line 703
+    .line 711
     invoke-virtual {p4, v1}, Landroid/widget/LinearLayout;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 705
+    .line 713
     new-instance v3, Landroid/widget/Spinner;
 
     iget-object v4, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
@@ -2140,15 +2192,15 @@
 
     invoke-direct {v3, v4, v5}, Landroid/widget/Spinner;-><init>(Landroid/content/Context;I)V
 
-    .line 706
+    .line 714
     invoke-virtual {v3, v1}, Landroid/widget/Spinner;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
     const/high16 v1, 0x60000
 
-    .line 707
+    .line 715
     invoke-virtual {v3, v1}, Landroid/widget/Spinner;->setDescendantFocusability(I)V
 
-    .line 708
+    .line 716
     invoke-virtual {v3}, Landroid/widget/Spinner;->getBackground()Landroid/graphics/drawable/Drawable;
 
     move-result-object v1
@@ -2157,7 +2209,7 @@
 
     invoke-virtual {v1, v2, v4}, Landroid/graphics/drawable/Drawable;->setColorFilter(ILandroid/graphics/PorterDuff$Mode;)V
 
-    .line 710
+    .line 718
     new-instance v1, Landroid/widget/ArrayAdapter;
 
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
@@ -2166,30 +2218,30 @@
 
     invoke-direct {v1, v2, v4, v0}, Landroid/widget/ArrayAdapter;-><init>(Landroid/content/Context;ILjava/util/List;)V
 
-    .line 711
+    .line 719
     invoke-virtual {v1, v4}, Landroid/widget/ArrayAdapter;->setDropDownViewResource(I)V
 
-    .line 713
+    .line 721
     invoke-virtual {v3, v1}, Landroid/widget/Spinner;->setAdapter(Landroid/widget/SpinnerAdapter;)V
 
-    .line 714
+    .line 722
     invoke-static {p3, p2}, Lcom/android/support/Preferences;->loadPrefInt(Ljava/lang/String;I)I
 
     move-result p3
 
     invoke-virtual {v3, p3}, Landroid/widget/Spinner;->setSelection(I)V
 
-    .line 715
+    .line 723
     new-instance p3, Lcom/android/support/CkHomuraMenu$4;
 
     invoke-direct {p3, p0, v3, p2}, Lcom/android/support/CkHomuraMenu$4;-><init>(Lcom/android/support/CkHomuraMenu;Landroid/widget/Spinner;I)V
 
     invoke-virtual {v3, p3}, Landroid/widget/Spinner;->setOnItemSelectedListener(Landroid/widget/AdapterView$OnItemSelectedListener;)V
 
-    .line 726
+    .line 734
     invoke-virtual {p4, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 727
+    .line 735
     invoke-virtual {p1, p4}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -2198,14 +2250,14 @@
 .method private Switch(Landroid/widget/LinearLayout;ILjava/lang/String;Z)V
     .registers 12
 
-    .line 525
+    .line 533
     new-instance v0, Landroid/widget/Switch;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/Switch;-><init>(Landroid/content/Context;)V
 
-    .line 526
+    .line 534
     new-instance v1, Landroid/content/res/ColorStateList;
 
     const/4 v2, 0x0
@@ -2250,14 +2302,14 @@
 
     invoke-direct {v1, v4, v3}, Landroid/content/res/ColorStateList;-><init>([[I[I)V
 
-    .line 539
+    .line 547
     sget v3, Landroid/os/Build$VERSION;->SDK_INT:I
 
     const/16 v4, 0x15
 
     if-lt v3, v4, :cond_52
 
-    .line 541
+    .line 549
     :try_start_39
     invoke-virtual {v0}, Landroid/widget/Switch;->getThumbDrawable()Landroid/graphics/drawable/Drawable;
 
@@ -2265,7 +2317,7 @@
 
     invoke-virtual {v3, v1}, Landroid/graphics/drawable/Drawable;->setTintList(Landroid/content/res/ColorStateList;)V
 
-    .line 542
+    .line 550
     invoke-virtual {v0}, Landroid/widget/Switch;->getTrackDrawable()Landroid/graphics/drawable/Drawable;
 
     move-result-object v3
@@ -2279,7 +2331,7 @@
     :catch_48
     move-exception v1
 
-    .line 544
+    .line 552
     const-string v3, "Mod_Menu"
 
     invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -2288,12 +2340,12 @@
 
     invoke-static {v3, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 547
+    .line 555
     :cond_52
     :goto_52
     invoke-virtual {v0, p3}, Landroid/widget/Switch;->setText(Ljava/lang/CharSequence;)V
 
-    .line 548
+    .line 556
     iget v1, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v0, v1}, Landroid/widget/Switch;->setTextColor(I)V
@@ -2302,24 +2354,24 @@
 
     const/4 v3, 0x5
 
-    .line 549
+    .line 557
     invoke-virtual {v0, v1, v3, v2, v3}, Landroid/widget/Switch;->setPadding(IIII)V
 
-    .line 550
+    .line 558
     invoke-static {p3, p2, p4}, Lcom/android/support/Preferences;->loadPrefBool(Ljava/lang/String;IZ)Z
 
     move-result p4
 
     invoke-virtual {v0, p4}, Landroid/widget/Switch;->setChecked(Z)V
 
-    .line 551
+    .line 559
     new-instance p4, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda4;
 
     invoke-direct {p4, p3, p2, v0}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda4;-><init>(Ljava/lang/String;ILandroid/widget/Switch;)V
 
     invoke-virtual {v0, p4}, Landroid/widget/Switch;->setOnCheckedChangeListener(Landroid/widget/CompoundButton$OnCheckedChangeListener;)V
 
-    .line 560
+    .line 568
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -2328,21 +2380,21 @@
 .method private TextView(Landroid/widget/LinearLayout;Ljava/lang/String;)V
     .registers 5
 
-    .line 983
+    .line 991
     new-instance v0, Landroid/widget/TextView;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 984
+    .line 992
     invoke-static {p2}, Landroid/text/Html;->fromHtml(Ljava/lang/String;)Landroid/text/Spanned;
 
     move-result-object p2
 
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 985
+    .line 993
     iget p2, p0, Lcom/android/support/CkHomuraMenu;->TEXT_COLOR_2:I
 
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setTextColor(I)V
@@ -2351,10 +2403,10 @@
 
     const/4 v1, 0x5
 
-    .line 986
+    .line 994
     invoke-virtual {v0, p2, v1, p2, v1}, Landroid/widget/TextView;->setPadding(IIII)V
 
-    .line 987
+    .line 995
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -2363,14 +2415,14 @@
 .method private WebTextView(Landroid/widget/LinearLayout;Ljava/lang/String;)V
     .registers 6
 
-    .line 991
+    .line 999
     new-instance v0, Landroid/webkit/WebView;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v0, v1}, Landroid/webkit/WebView;-><init>(Landroid/content/Context;)V
 
-    .line 992
+    .line 1000
     const-string v1, "text/html"
 
     const-string v2, "utf-8"
@@ -2379,15 +2431,15 @@
 
     const/4 p2, 0x0
 
-    .line 993
+    .line 1001
     invoke-virtual {v0, p2}, Landroid/webkit/WebView;->setBackgroundColor(I)V
 
     const/4 v1, 0x5
 
-    .line 994
+    .line 1002
     invoke-virtual {v0, p2, v1, p2, v1}, Landroid/webkit/WebView;->setPadding(IIII)V
 
-    .line 995
+    .line 1003
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
     return-void
@@ -2427,7 +2479,7 @@
 
     int-to-float p1, p1
 
-    .line 1004
+    .line 1012
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-virtual {v0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
@@ -2460,16 +2512,16 @@
 
     const/4 v3, 0x0
 
-    .line 381
+    .line 389
     :goto_5
     array-length v4, v0
 
-    if-ge v2, v4, :cond_1ec
+    if-ge v2, v4, :cond_1ee
 
-    .line 384
+    .line 392
     aget-object v4, v0, v2
 
-    .line 385
+    .line 393
     const-string v5, "_True"
 
     invoke-virtual {v4, v5}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
@@ -2482,7 +2534,7 @@
 
     if-eqz v6, :cond_1b
 
-    .line 387
+    .line 395
     invoke-virtual {v4, v5, v7}, Ljava/lang/String;->replaceFirst(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v4
@@ -2494,7 +2546,7 @@
     :cond_1b
     const/4 v5, 0x0
 
-    .line 391
+    .line 399
     :goto_1c
     const-string v6, "CollapseAdd_"
 
@@ -2504,10 +2556,10 @@
 
     if-eqz v9, :cond_2c
 
-    .line 393
+    .line 401
     iget-object v9, p0, Lcom/android/support/CkHomuraMenu;->mCollapse:Landroid/widget/LinearLayout;
 
-    .line 394
+    .line 402
     invoke-virtual {v4, v6, v7}, Ljava/lang/String;->replaceFirst(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v4
@@ -2519,7 +2571,7 @@
     :cond_2c
     move-object/from16 v10, p2
 
-    .line 396
+    .line 404
     :goto_2e
     const-string v6, "_"
 
@@ -2527,7 +2579,7 @@
 
     move-result-object v9
 
-    .line 399
+    .line 407
     aget-object v11, v9, v1
 
     invoke-static {v11}, Landroid/text/TextUtils;->isDigitsOnly(Ljava/lang/CharSequence;)Z
@@ -2553,9 +2605,9 @@
 
     move v11, v7
 
-    goto :goto_68
+    goto :goto_6a
 
-    .line 400
+    .line 408
     :cond_4b
     :goto_4b
     aget-object v11, v9, v1
@@ -2564,7 +2616,7 @@
 
     move-result v11
 
-    .line 401
+    .line 409
     new-instance v12, Ljava/lang/StringBuilder;
 
     invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
@@ -2573,9 +2625,13 @@
 
     invoke-virtual {v12, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v12, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-result-object v9
 
-    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v9, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v9
+
+    invoke-virtual {v9}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v9
 
@@ -2585,13 +2641,13 @@
 
     add-int/lit8 v3, v3, 0x1
 
-    .line 407
-    :goto_68
+    .line 415
+    :goto_6a
     invoke-virtual {v4, v6}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
 
     move-result-object v4
 
-    .line 408
+    .line 416
     aget-object v6, v4, v1
 
     invoke-virtual {v6}, Ljava/lang/String;->hashCode()I
@@ -2606,370 +2662,370 @@
 
     const/4 v13, -0x1
 
-    sparse-switch v7, :sswitch_data_1ee
+    sparse-switch v7, :sswitch_data_1f0
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_7d
+    :sswitch_7f
     const-string v7, "Button"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_87
+    if-nez v6, :cond_89
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :cond_87
+    :cond_89
     const/16 v13, 0xf
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_8b
+    :sswitch_8d
     const-string v7, "CheckBox"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_95
+    if-nez v6, :cond_97
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :cond_95
+    :cond_97
     const/16 v13, 0xe
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_99
+    :sswitch_9b
     const-string v7, "RadioButton"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_a3
+    if-nez v6, :cond_a5
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :cond_a3
+    :cond_a5
     const/16 v13, 0xd
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_a7
+    :sswitch_a9
     const-string v7, "RichWebView"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_b1
+    if-nez v6, :cond_b3
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :cond_b1
+    :cond_b3
     const/16 v13, 0xc
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_b5
+    :sswitch_b7
     const-string v7, "Category"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_bf
+    if-nez v6, :cond_c1
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :cond_bf
+    :cond_c1
     const/16 v13, 0xb
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_c3
+    :sswitch_c5
     const-string v7, "RichTextView"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_cd
+    if-nez v6, :cond_cf
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :cond_cd
+    :cond_cf
     const/16 v13, 0xa
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_d1
+    :sswitch_d3
     const-string v7, "ButtonOnOff"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_db
+    if-nez v6, :cond_dd
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :cond_db
+    :cond_dd
     const/16 v13, 0x9
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_df
+    :sswitch_e1
     const-string v7, "Spinner"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_e9
+    if-nez v6, :cond_eb
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :cond_e9
+    :cond_eb
     const/16 v13, 0x8
 
-    goto/16 :goto_144
+    goto/16 :goto_146
 
-    :sswitch_ed
+    :sswitch_ef
     const-string v7, "Collapse"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_f6
+    if-nez v6, :cond_f8
 
-    goto :goto_144
+    goto :goto_146
 
-    :cond_f6
+    :cond_f8
     const/4 v13, 0x7
 
-    goto :goto_144
+    goto :goto_146
 
-    :sswitch_f8
+    :sswitch_fa
     const-string v7, "InputText"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_101
+    if-nez v6, :cond_103
 
-    goto :goto_144
+    goto :goto_146
 
-    :cond_101
+    :cond_103
     const/4 v13, 0x6
 
-    goto :goto_144
+    goto :goto_146
 
-    :sswitch_103
+    :sswitch_105
     const-string v7, "SeekBar"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_10c
+    if-nez v6, :cond_10e
 
-    goto :goto_144
+    goto :goto_146
 
-    :cond_10c
+    :cond_10e
     const/4 v13, 0x5
 
-    goto :goto_144
+    goto :goto_146
 
-    :sswitch_10e
+    :sswitch_110
     const-string v7, "InputValue"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_117
+    if-nez v6, :cond_119
 
-    goto :goto_144
+    goto :goto_146
 
-    :cond_117
+    :cond_119
     const/4 v13, 0x4
 
-    goto :goto_144
+    goto :goto_146
 
-    :sswitch_119
+    :sswitch_11b
     const-string v7, "OnceCheckBox"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_122
+    if-nez v6, :cond_124
 
-    goto :goto_144
+    goto :goto_146
 
-    :cond_122
+    :cond_124
     const/4 v13, 0x3
 
-    goto :goto_144
+    goto :goto_146
 
-    :sswitch_124
+    :sswitch_126
     const-string v7, "Toggle"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_12d
+    if-nez v6, :cond_12f
 
-    goto :goto_144
+    goto :goto_146
 
-    :cond_12d
+    :cond_12f
     const/4 v13, 0x2
 
-    goto :goto_144
+    goto :goto_146
 
-    :sswitch_12f
+    :sswitch_131
     const-string v7, "FormationCopy"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_138
+    if-nez v6, :cond_13a
 
-    goto :goto_144
+    goto :goto_146
 
-    :cond_138
+    :cond_13a
     const/4 v13, 0x1
 
-    goto :goto_144
+    goto :goto_146
 
-    :sswitch_13a
+    :sswitch_13c
     const-string v7, "ButtonLink"
 
     invoke-virtual {v6, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_143
+    if-nez v6, :cond_145
 
-    goto :goto_144
+    goto :goto_146
 
-    :cond_143
+    :cond_145
     const/4 v13, 0x0
 
-    :goto_144
-    packed-switch v13, :pswitch_data_230
+    :goto_146
+    packed-switch v13, :pswitch_data_232
 
-    goto/16 :goto_1e8
+    goto/16 :goto_1ea
 
-    .line 416
-    :pswitch_149
+    .line 424
+    :pswitch_14b
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v11, v4}, Lcom/android/support/CkHomuraMenu;->Button(Landroid/widget/LinearLayout;ILjava/lang/String;)V
 
-    goto/16 :goto_1e8
+    goto/16 :goto_1ea
 
-    .line 435
-    :pswitch_150
+    .line 443
+    :pswitch_152
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v11, v4, v5}, Lcom/android/support/CkHomuraMenu;->CheckBox(Landroid/widget/LinearLayout;ILjava/lang/String;Z)V
 
-    goto/16 :goto_1e8
+    goto/16 :goto_1ea
 
-    .line 438
-    :pswitch_157
+    .line 446
+    :pswitch_159
     aget-object v5, v4, v8
 
     aget-object v4, v4, v12
 
     invoke-direct {p0, v10, v11, v5, v4}, Lcom/android/support/CkHomuraMenu;->RadioButton(Landroid/widget/LinearLayout;ILjava/lang/String;Ljava/lang/String;)V
 
-    goto/16 :goto_1e8
+    goto/16 :goto_1ea
 
-    :pswitch_160
+    :pswitch_162
+    add-int/lit8 v3, v3, 0x1
+
+    .line 466
+    aget-object v4, v4, v8
+
+    invoke-direct {p0, v10, v4}, Lcom/android/support/CkHomuraMenu;->WebTextView(Landroid/widget/LinearLayout;Ljava/lang/String;)V
+
+    goto/16 :goto_1ea
+
+    :pswitch_16b
     add-int/lit8 v3, v3, 0x1
 
     .line 458
     aget-object v4, v4, v8
 
-    invoke-direct {p0, v10, v4}, Lcom/android/support/CkHomuraMenu;->WebTextView(Landroid/widget/LinearLayout;Ljava/lang/String;)V
-
-    goto/16 :goto_1e8
-
-    :pswitch_169
-    add-int/lit8 v3, v3, 0x1
-
-    .line 450
-    aget-object v4, v4, v8
-
     invoke-direct {p0, v10, v4}, Lcom/android/support/CkHomuraMenu;->Category(Landroid/widget/LinearLayout;Ljava/lang/String;)V
 
-    goto/16 :goto_1e8
+    goto/16 :goto_1ea
 
-    :pswitch_172
+    :pswitch_174
     add-int/lit8 v3, v3, 0x1
 
-    .line 454
+    .line 462
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v4}, Lcom/android/support/CkHomuraMenu;->TextView(Landroid/widget/LinearLayout;Ljava/lang/String;)V
 
-    goto/16 :goto_1e8
+    goto/16 :goto_1ea
 
-    .line 419
-    :pswitch_17b
+    .line 427
+    :pswitch_17d
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v11, v4, v5}, Lcom/android/support/CkHomuraMenu;->ButtonOnOff(Landroid/widget/LinearLayout;ILjava/lang/String;Z)V
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    .line 422
-    :pswitch_181
+    .line 430
+    :pswitch_183
     aget-object v5, v4, v8
 
     invoke-direct {p0, v10, v5}, Lcom/android/support/CkHomuraMenu;->TextView(Landroid/widget/LinearLayout;Ljava/lang/String;)V
 
-    .line 423
+    .line 431
     aget-object v5, v4, v8
 
     aget-object v4, v4, v12
 
     invoke-direct {p0, v10, v11, v5, v4}, Lcom/android/support/CkHomuraMenu;->Spinner(Landroid/widget/LinearLayout;ILjava/lang/String;Ljava/lang/String;)V
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    .line 441
-    :pswitch_18e
+    .line 449
+    :pswitch_190
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v4, v5}, Lcom/android/support/CkHomuraMenu;->Collapse(Landroid/widget/LinearLayout;Ljava/lang/String;Z)V
 
     add-int/lit8 v3, v3, 0x1
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    .line 426
-    :pswitch_196
+    .line 434
+    :pswitch_198
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v11, v4}, Lcom/android/support/CkHomuraMenu;->InputText(Landroid/widget/LinearLayout;ILjava/lang/String;)V
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    :pswitch_19c
+    :pswitch_19e
     const/4 v5, 0x2
 
-    .line 413
+    .line 421
     aget-object v12, v4, v8
 
     aget-object v5, v4, v5
@@ -2988,17 +3044,17 @@
 
     invoke-direct/range {v9 .. v14}, Lcom/android/support/CkHomuraMenu;->SeekBar(Landroid/widget/LinearLayout;ILjava/lang/String;II)V
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    :pswitch_1b0
+    :pswitch_1b2
     const/4 v5, 0x2
 
-    .line 429
+    .line 437
     array-length v7, v4
 
-    if-ne v7, v9, :cond_1bf
+    if-ne v7, v9, :cond_1c1
 
-    .line 430
+    .line 438
     aget-object v7, v4, v5
 
     aget-object v9, v4, v8
@@ -3009,115 +3065,115 @@
 
     invoke-direct {p0, v10, v11, v7, v9}, Lcom/android/support/CkHomuraMenu;->InputNum(Landroid/widget/LinearLayout;ILjava/lang/String;I)V
 
-    .line 431
-    :cond_1bf
+    .line 439
+    :cond_1c1
     array-length v7, v4
 
-    if-ne v7, v5, :cond_1e8
+    if-ne v7, v5, :cond_1ea
 
-    .line 432
+    .line 440
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v11, v4, v1}, Lcom/android/support/CkHomuraMenu;->InputNum(Landroid/widget/LinearLayout;ILjava/lang/String;I)V
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    :pswitch_1c8
+    :pswitch_1ca
     add-int/lit8 v3, v3, 0x1
 
-    .line 462
+    .line 470
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v11, v4}, Lcom/android/support/CkHomuraMenu;->OnceCheckBox(Landroid/widget/LinearLayout;ILjava/lang/String;)V
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    .line 410
-    :pswitch_1d0
+    .line 418
+    :pswitch_1d2
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v11, v4, v5}, Lcom/android/support/CkHomuraMenu;->Switch(Landroid/widget/LinearLayout;ILjava/lang/String;Z)V
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    :pswitch_1d6
+    :pswitch_1d8
     add-int/lit8 v3, v3, 0x1
 
-    .line 466
+    .line 474
     aget-object v4, v4, v8
 
     invoke-direct {p0, v10, v11, v4}, Lcom/android/support/CkHomuraMenu;->FormationCopy(Landroid/widget/LinearLayout;ILjava/lang/String;)V
 
-    goto :goto_1e8
+    goto :goto_1ea
 
-    :pswitch_1de
+    :pswitch_1e0
     const/4 v5, 0x2
 
     add-int/lit8 v3, v3, 0x1
 
-    .line 446
+    .line 454
     aget-object v7, v4, v8
 
     aget-object v4, v4, v5
 
     invoke-direct {p0, v10, v7, v4}, Lcom/android/support/CkHomuraMenu;->ButtonLink(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;)V
 
-    :cond_1e8
-    :goto_1e8
+    :cond_1ea
+    :goto_1ea
     add-int/lit8 v2, v2, 0x1
 
     goto/16 :goto_5
 
-    :cond_1ec
+    :cond_1ee
     return-void
 
     nop
 
-    :sswitch_data_1ee
+    :sswitch_data_1f0
     .sparse-switch
-        -0x73d2c194 -> :sswitch_13a
-        -0x6b0be45a -> :sswitch_12f
-        -0x6a5c588c -> :sswitch_124
-        -0x4f0d969c -> :sswitch_119
-        -0x370e8c19 -> :sswitch_10e
-        -0x274065a5 -> :sswitch_103
-        -0x22cfc409 -> :sswitch_f8
-        -0x21d27833 -> :sswitch_ed
-        -0x1440b607 -> :sswitch_df
-        -0x6595922 -> :sswitch_d1
-        0x4f11a8e -> :sswitch_c3
-        0x6dd211e -> :sswitch_b5
-        0x1977177d -> :sswitch_a7
-        0x2e46a6ed -> :sswitch_99
-        0x5f7507c3 -> :sswitch_8b
-        0x77471352 -> :sswitch_7d
+        -0x73d2c194 -> :sswitch_13c
+        -0x6b0be45a -> :sswitch_131
+        -0x6a5c588c -> :sswitch_126
+        -0x4f0d969c -> :sswitch_11b
+        -0x370e8c19 -> :sswitch_110
+        -0x274065a5 -> :sswitch_105
+        -0x22cfc409 -> :sswitch_fa
+        -0x21d27833 -> :sswitch_ef
+        -0x1440b607 -> :sswitch_e1
+        -0x6595922 -> :sswitch_d3
+        0x4f11a8e -> :sswitch_c5
+        0x6dd211e -> :sswitch_b7
+        0x1977177d -> :sswitch_a9
+        0x2e46a6ed -> :sswitch_9b
+        0x5f7507c3 -> :sswitch_8d
+        0x77471352 -> :sswitch_7f
     .end sparse-switch
 
-    :pswitch_data_230
+    :pswitch_data_232
     .packed-switch 0x0
-        :pswitch_1de
-        :pswitch_1d6
-        :pswitch_1d0
-        :pswitch_1c8
-        :pswitch_1b0
-        :pswitch_19c
-        :pswitch_196
-        :pswitch_18e
-        :pswitch_181
-        :pswitch_17b
-        :pswitch_172
-        :pswitch_169
-        :pswitch_160
-        :pswitch_157
-        :pswitch_150
-        :pswitch_149
+        :pswitch_1e0
+        :pswitch_1d8
+        :pswitch_1d2
+        :pswitch_1ca
+        :pswitch_1b2
+        :pswitch_19e
+        :pswitch_198
+        :pswitch_190
+        :pswitch_183
+        :pswitch_17d
+        :pswitch_174
+        :pswitch_16b
+        :pswitch_162
+        :pswitch_159
+        :pswitch_152
+        :pswitch_14b
     .end packed-switch
 .end method
 
 .method private isViewCollapsed()Z
     .registers 2
 
-    .line 999
+    .line 1007
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->rootFrame:Landroid/widget/FrameLayout;
 
     if-eqz v0, :cond_f
@@ -3147,19 +3203,19 @@
 .method static synthetic lambda$CheckBox$19(Landroid/widget/CheckBox;Ljava/lang/String;ILandroid/widget/CompoundButton;Z)V
     .registers 5
 
-    .line 870
+    .line 878
     invoke-virtual {p0}, Landroid/widget/CheckBox;->isChecked()Z
 
     move-result p0
 
     if-eqz p0, :cond_a
 
-    .line 871
+    .line 879
     invoke-static {p1, p2, p4}, Lcom/android/support/Preferences;->changeFeatureBool(Ljava/lang/String;IZ)V
 
     return-void
 
-    .line 873
+    .line 881
     :cond_a
     invoke-static {p1, p2, p4}, Lcom/android/support/Preferences;->changeFeatureBool(Ljava/lang/String;IZ)V
 
@@ -3171,7 +3227,7 @@
 
     const/4 p2, 0x1
 
-    .line 503
+    .line 511
     invoke-static {p0, p1, p2}, Lcom/android/support/Preferences;->changeFeatureBool(Ljava/lang/String;IZ)V
 
     return-void
@@ -3180,14 +3236,14 @@
 .method static synthetic lambda$Switch$7(Ljava/lang/String;ILandroid/widget/CheckBox;Landroid/widget/CompoundButton;Z)V
     .registers 5
 
-    .line 515
+    .line 523
     invoke-static {p0, p1, p4}, Lcom/android/support/Preferences;->changeFeatureBool(Ljava/lang/String;IZ)V
 
     const/4 p0, -0x1
 
     if-ne p1, p0, :cond_1e
 
-    .line 517
+    .line 525
     invoke-virtual {p2}, Landroid/widget/CheckBox;->getContext()Landroid/content/Context;
 
     move-result-object p1
@@ -3200,7 +3256,7 @@
 
     if-nez p4, :cond_1e
 
-    .line 519
+    .line 527
     invoke-virtual {p2}, Landroid/widget/CheckBox;->getContext()Landroid/content/Context;
 
     move-result-object p0
@@ -3218,14 +3274,14 @@
 .method static synthetic lambda$Switch$8(Ljava/lang/String;ILandroid/widget/Switch;Landroid/widget/CompoundButton;Z)V
     .registers 5
 
-    .line 552
+    .line 560
     invoke-static {p0, p1, p4}, Lcom/android/support/Preferences;->changeFeatureBool(Ljava/lang/String;IZ)V
 
     const/4 p0, -0x1
 
     if-ne p1, p0, :cond_1e
 
-    .line 554
+    .line 562
     invoke-virtual {p2}, Landroid/widget/Switch;->getContext()Landroid/content/Context;
 
     move-result-object p1
@@ -3238,7 +3294,7 @@
 
     if-nez p4, :cond_1e
 
-    .line 556
+    .line 564
     invoke-virtual {p2}, Landroid/widget/Switch;->getContext()Landroid/content/Context;
 
     move-result-object p0
@@ -3256,7 +3312,7 @@
 .method static makeMenuIcon()Landroid/graphics/drawable/Drawable;
     .registers 19
 
-    .line 301
+    .line 309
     invoke-static {}, Landroid/content/res/Resources;->getSystem()Landroid/content/res/Resources;
 
     move-result-object v0
@@ -3275,24 +3331,24 @@
 
     float-to-int v0, v0
 
-    .line 302
+    .line 310
     sget-object v2, Landroid/graphics/Bitmap$Config;->ARGB_8888:Landroid/graphics/Bitmap$Config;
 
     invoke-static {v0, v0, v2}, Landroid/graphics/Bitmap;->createBitmap(IILandroid/graphics/Bitmap$Config;)Landroid/graphics/Bitmap;
 
     move-result-object v2
 
-    .line 303
+    .line 311
     new-instance v3, Landroid/graphics/Canvas;
 
     invoke-direct {v3, v2}, Landroid/graphics/Canvas;-><init>(Landroid/graphics/Bitmap;)V
 
-    .line 304
+    .line 312
     new-instance v8, Landroid/graphics/Paint;
 
     invoke-direct {v8, v1}, Landroid/graphics/Paint;-><init>(I)V
 
-    .line 306
+    .line 314
     const-string v1, "#2F3D4C"
 
     invoke-static {v1}, Landroid/graphics/Color;->parseColor(Ljava/lang/String;)I
@@ -3307,10 +3363,10 @@
 
     div-float v1, v0, v1
 
-    .line 307
+    .line 315
     invoke-virtual {v3, v1, v1, v1, v8}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
 
-    .line 309
+    .line 317
     const-string v4, "#FFB300"
 
     invoke-static {v4}, Landroid/graphics/Color;->parseColor(Ljava/lang/String;)I
@@ -3323,10 +3379,10 @@
 
     mul-float v4, v4, v0
 
-    .line 310
+    .line 318
     invoke-virtual {v3, v1, v1, v4, v8}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
 
-    .line 312
+    .line 320
     const-string v4, "#82CAFD"
 
     invoke-static {v4}, Landroid/graphics/Color;->parseColor(Ljava/lang/String;)I
@@ -3339,10 +3395,10 @@
 
     mul-float v4, v4, v0
 
-    .line 313
+    .line 321
     invoke-virtual {v8, v4}, Landroid/graphics/Paint;->setStrokeWidth(F)V
 
-    .line 314
+    .line 322
     sget-object v4, Landroid/graphics/Paint$Cap;->ROUND:Landroid/graphics/Paint$Cap;
 
     invoke-virtual {v8, v4}, Landroid/graphics/Paint;->setStrokeCap(Landroid/graphics/Paint$Cap;)V
@@ -3360,7 +3416,7 @@
 
     int-to-double v6, v9
 
-    .line 316
+    .line 324
     invoke-static {v6, v7}, Ljava/lang/Double;->isNaN(D)Z
 
     mul-double v6, v6, v4
@@ -3381,7 +3437,7 @@
 
     float-to-double v12, v4
 
-    .line 319
+    .line 327
     invoke-static {v6, v7}, Ljava/lang/Math;->cos(D)D
 
     move-result-wide v14
@@ -3412,7 +3468,7 @@
 
     float-to-double v13, v5
 
-    .line 320
+    .line 328
     invoke-static {v6, v7}, Ljava/lang/Math;->cos(D)D
 
     move-result-wide v15
@@ -3449,7 +3505,7 @@
 
     move v5, v12
 
-    .line 319
+    .line 327
     invoke-virtual/range {v3 .. v8}, Landroid/graphics/Canvas;->drawLine(FFFFLandroid/graphics/Paint;)V
 
     add-int/lit8 v9, v9, 0x1
@@ -3460,7 +3516,7 @@
 
     goto :goto_5a
 
-    .line 322
+    .line 330
     :cond_c2
     new-instance v0, Landroid/graphics/drawable/BitmapDrawable;
 
@@ -3476,7 +3532,7 @@
 .method private onTouchListener()Landroid/view/View$OnTouchListener;
     .registers 4
 
-    .line 326
+    .line 334
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const-string v1, "data"
@@ -3487,7 +3543,7 @@
 
     move-result-object v0
 
-    .line 327
+    .line 335
     new-instance v1, Lcom/android/support/CkHomuraMenu$1;
 
     invoke-direct {v1, p0, v0}, Lcom/android/support/CkHomuraMenu$1;-><init>(Lcom/android/support/CkHomuraMenu;Landroid/content/SharedPreferences;)V
@@ -3506,12 +3562,12 @@
 .method GetWidthHeight()V
     .registers 3
 
-    .line 290
+    .line 298
     new-instance v0, Landroid/util/DisplayMetrics;
 
     invoke-direct {v0}, Landroid/util/DisplayMetrics;-><init>()V
 
-    .line 292
+    .line 300
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->mWindowManager:Landroid/view/WindowManager;
 
     invoke-interface {v1}, Landroid/view/WindowManager;->getDefaultDisplay()Landroid/view/Display;
@@ -3520,12 +3576,12 @@
 
     invoke-virtual {v1, v0}, Landroid/view/Display;->getRealMetrics(Landroid/util/DisplayMetrics;)V
 
-    .line 296
+    .line 304
     iget v1, v0, Landroid/util/DisplayMetrics;->widthPixels:I
 
     iput v1, p0, Lcom/android/support/CkHomuraMenu;->SCREEN_WIDTH:I
 
-    .line 297
+    .line 305
     iget v0, v0, Landroid/util/DisplayMetrics;->heightPixels:I
 
     iput v0, p0, Lcom/android/support/CkHomuraMenu;->SCREEN_HEIGHT:I
@@ -3534,7 +3590,7 @@
 .end method
 
 .method public SetWindowManagerActivity()V
-    .registers 10
+    .registers 11
 
     .line 269
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
@@ -3547,64 +3603,81 @@
 
     move-result-object v0
 
-    .line 270
-    new-instance v1, Landroid/view/WindowManager$LayoutParams;
+    .line 272
+    sget v1, Landroid/os/Build$VERSION;->SDK_INT:I
 
-    const-string v2, "menuX"
+    const/16 v2, 0x1a
+
+    if-lt v1, v2, :cond_14
+
+    const/16 v1, 0x7f6
+
+    const/16 v7, 0x7f6
+
+    goto :goto_18
+
+    :cond_14
+    const/16 v1, 0x7d2
+
+    const/16 v7, 0x7d2
+
+    .line 278
+    :goto_18
+    new-instance v2, Landroid/view/WindowManager$LayoutParams;
+
+    const-string v1, "menuX"
 
     iget v3, p0, Lcom/android/support/CkHomuraMenu;->POS_X:I
 
-    .line 273
-    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I
-
-    move-result v4
-
-    const-string v2, "menuY"
-
-    iget v3, p0, Lcom/android/support/CkHomuraMenu;->POS_Y:I
-
-    .line 274
-    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I
+    .line 281
+    invoke-interface {v0, v1, v3}, Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I
 
     move-result v5
 
-    const v7, 0x800108
+    const-string v1, "menuY"
 
-    const/4 v8, -0x2
+    iget v3, p0, Lcom/android/support/CkHomuraMenu;->POS_Y:I
 
-    const/4 v2, -0x2
+    .line 282
+    invoke-interface {v0, v1, v3}, Landroid/content/SharedPreferences;->getInt(Ljava/lang/String;I)I
+
+    move-result v6
+
+    const v8, 0x800108
+
+    const/4 v9, -0x2
 
     const/4 v3, -0x2
 
-    const/16 v6, 0x3e8
+    const/4 v4, -0x2
 
-    invoke-direct/range {v1 .. v8}, Landroid/view/WindowManager$LayoutParams;-><init>(IIIIIII)V
+    invoke-direct/range {v2 .. v9}, Landroid/view/WindowManager$LayoutParams;-><init>(IIIIIII)V
 
-    iput-object v1, p0, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
+    iput-object v2, p0, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
 
-    .line 281
+    .line 289
     sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
 
     const/16 v1, 0x1c
 
-    if-lt v0, v1, :cond_33
+    if-lt v0, v1, :cond_40
 
-    .line 282
+    .line 290
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
 
     const/4 v1, 0x1
 
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->layoutInDisplayCutoutMode:I
 
-    .line 283
-    :cond_33
+    .line 291
+    :cond_40
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->vmParams:Landroid/view/WindowManager$LayoutParams;
 
     const v1, 0x800033
 
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->gravity:I
 
-    .line 284
+    .line 292
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     check-cast v0, Landroid/app/Activity;
@@ -3615,10 +3688,10 @@
 
     iput-object v0, p0, Lcom/android/support/CkHomuraMenu;->mWindowManager:Landroid/view/WindowManager;
 
-    .line 285
+    .line 293
     invoke-virtual {p0}, Lcom/android/support/CkHomuraMenu;->GetWidthHeight()V
 
-    .line 286
+    .line 294
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->mWindowManager:Landroid/view/WindowManager;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->rootFrame:Landroid/widget/FrameLayout;
@@ -3670,7 +3743,7 @@
 
     goto :goto_18
 
-    .line 619
+    .line 627
     :cond_4
     iget-boolean p3, p0, Lcom/android/support/CkHomuraMenu;->settingsOpen:Z
 
@@ -3678,14 +3751,14 @@
 
     iput-boolean p3, p0, Lcom/android/support/CkHomuraMenu;->settingsOpen:Z
 
-    .line 620
+    .line 628
     iget-object p3, p0, Lcom/android/support/CkHomuraMenu;->scrollView:Landroid/widget/ScrollView;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->mSettings:Landroid/widget/LinearLayout;
 
     invoke-virtual {p3, v0}, Landroid/widget/ScrollView;->removeView(Landroid/view/View;)V
 
-    .line 621
+    .line 629
     iget-object p3, p0, Lcom/android/support/CkHomuraMenu;->scrollView:Landroid/widget/ScrollView;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->mods:Landroid/widget/LinearLayout;
@@ -3695,7 +3768,7 @@
     :goto_18
     const/4 p3, 0x0
 
-    .line 624
+    .line 632
     invoke-static {p2, p1, p3}, Lcom/android/support/Preferences;->changeFeatureInt(Ljava/lang/String;II)V
 
     return-void
@@ -3704,7 +3777,7 @@
 .method synthetic lambda$ButtonLink$10$com-android-support-CkHomuraMenu(Ljava/lang/String;Landroid/view/View;)V
     .registers 4
 
-    .line 642
+    .line 650
     new-instance p2, Landroid/content/Intent;
 
     const-string v0, "android.intent.action.VIEW"
@@ -3713,17 +3786,17 @@
 
     const/high16 v0, 0x10000000
 
-    .line 643
+    .line 651
     invoke-virtual {p2, v0}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;
 
-    .line 644
+    .line 652
     invoke-static {p1}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
 
     move-result-object p1
 
     invoke-virtual {p2, p1}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
 
-    .line 645
+    .line 653
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-virtual {p1, p2}, Landroid/content/Context;->startActivity(Landroid/content/Intent;)V
@@ -3734,12 +3807,12 @@
 .method synthetic lambda$FormationCopy$5$com-android-support-CkHomuraMenu(Landroid/view/View;)V
     .registers 5
 
-    .line 484
+    .line 492
     invoke-virtual {p0}, Lcom/android/support/CkHomuraMenu;->GetCurrentFormation()Ljava/lang/String;
 
     move-result-object p1
 
-    .line 485
+    .line 493
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const-string v1, "Copiado al portapapeles"
@@ -3752,7 +3825,7 @@
 
     invoke-virtual {v0}, Landroid/widget/Toast;->show()V
 
-    .line 486
+    .line 494
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const-string v1, "clipboard"
@@ -3777,7 +3850,7 @@
 .method synthetic lambda$InputNum$11$com-android-support-CkHomuraMenu(Landroid/view/View;Z)V
     .registers 4
 
-    .line 755
+    .line 763
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const-string v0, "input_method"
@@ -3794,7 +3867,7 @@
 
     const/4 p2, 0x2
 
-    .line 757
+    .line 765
     invoke-virtual {p1, p2, v0}, Landroid/view/inputmethod/InputMethodManager;->toggleSoftInput(II)V
 
     return-void
@@ -3802,7 +3875,7 @@
     :cond_12
     const/4 p2, 0x0
 
-    .line 759
+    .line 767
     invoke-virtual {p1, v0, p2}, Landroid/view/inputmethod/InputMethodManager;->toggleSoftInput(II)V
 
     return-void
@@ -3811,7 +3884,7 @@
 .method synthetic lambda$InputNum$12$com-android-support-CkHomuraMenu(Landroid/widget/EditText;ILandroid/widget/Button;Ljava/lang/String;ILandroid/content/DialogInterface;I)V
     .registers 8
 
-    .line 774
+    .line 782
     :try_start_0
     invoke-virtual {p1}, Landroid/widget/EditText;->getText()Landroid/text/Editable;
 
@@ -3868,7 +3941,7 @@
     :cond_28
     const p2, 0x7ffffff8
 
-    .line 784
+    .line 792
     :goto_2b
     new-instance p6, Ljava/lang/StringBuilder;
 
@@ -3876,23 +3949,35 @@
 
     invoke-virtual {p6, p4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p6
+
     const-string p7, ": <font color=\'"
 
     invoke-virtual {p6, p7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p6
 
     iget-object p7, p0, Lcom/android/support/CkHomuraMenu;->NumberTxtColor:Ljava/lang/String;
 
     invoke-virtual {p6, p7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p6
+
     const-string p7, "\'>"
 
     invoke-virtual {p6, p7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p6
+
     invoke-virtual {p6, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object p6
 
     const-string p7, "</font>"
 
     invoke-virtual {p6, p7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p6
 
     invoke-virtual {p6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -3904,12 +3989,12 @@
 
     invoke-virtual {p3, p6}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 785
+    .line 793
     invoke-static {p4, p5, p2}, Lcom/android/support/Preferences;->changeFeatureInt(Ljava/lang/String;II)V
 
     const/4 p2, 0x0
 
-    .line 787
+    .line 795
     invoke-virtual {p1, p2}, Landroid/widget/EditText;->setFocusable(Z)V
 
     return-void
@@ -3918,7 +4003,7 @@
 .method synthetic lambda$InputNum$13$com-android-support-CkHomuraMenu(Landroid/content/DialogInterface;I)V
     .registers 4
 
-    .line 792
+    .line 800
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const-string p2, "input_method"
@@ -3933,7 +4018,7 @@
 
     const/4 v0, 0x0
 
-    .line 793
+    .line 801
     invoke-virtual {p1, p2, v0}, Landroid/view/inputmethod/InputMethodManager;->toggleSoftInput(II)V
 
     return-void
@@ -3942,23 +4027,23 @@
 .method synthetic lambda$InputNum$14$com-android-support-CkHomuraMenu(ILandroid/widget/Button;Ljava/lang/String;ILandroid/view/View;)V
     .registers 14
 
-    .line 745
+    .line 753
     new-instance p5, Landroid/app/AlertDialog$Builder;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {p5, v0}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
 
-    .line 746
+    .line 754
     new-instance v3, Landroid/widget/EditText;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v3, v0}, Landroid/widget/EditText;-><init>(Landroid/content/Context;)V
 
-    if-eqz p1, :cond_21
+    if-eqz p1, :cond_22
 
-    .line 748
+    .line 756
     new-instance v0, Ljava/lang/StringBuilder;
 
     const-string v1, "Max value: "
@@ -3967,19 +4052,21 @@
 
     invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
+    move-result-object v0
+
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v0
 
     invoke-virtual {v3, v0}, Landroid/widget/EditText;->setHint(Ljava/lang/CharSequence;)V
 
-    :cond_21
+    :cond_22
     const/4 v0, 0x2
 
-    .line 749
+    .line 757
     invoke-virtual {v3, v0}, Landroid/widget/EditText;->setInputType(I)V
 
-    .line 750
+    .line 758
     const-string v0, "0123456789-"
 
     invoke-static {v0}, Landroid/text/method/DigitsKeyListener;->getInstance(Ljava/lang/String;)Landroid/text/method/DigitsKeyListener;
@@ -3990,10 +4077,10 @@
 
     const/4 v0, 0x1
 
-    .line 751
+    .line 759
     new-array v1, v0, [Landroid/text/InputFilter;
 
-    .line 752
+    .line 760
     new-instance v2, Landroid/text/InputFilter$LengthFilter;
 
     const/16 v4, 0xa
@@ -4004,44 +4091,44 @@
 
     aput-object v2, v1, v4
 
-    .line 753
+    .line 761
     invoke-virtual {v3, v1}, Landroid/widget/EditText;->setFilters([Landroid/text/InputFilter;)V
 
-    .line 754
+    .line 762
     new-instance v1, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda7;
 
     invoke-direct {v1, p0}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda7;-><init>(Lcom/android/support/CkHomuraMenu;)V
 
     invoke-virtual {v3, v1}, Landroid/widget/EditText;->setOnFocusChangeListener(Landroid/view/View$OnFocusChangeListener;)V
 
-    .line 762
+    .line 770
     invoke-virtual {v3}, Landroid/widget/EditText;->requestFocus()Z
 
-    .line 764
+    .line 772
     const-string v1, "Input number"
 
     invoke-virtual {p5, v1}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
 
-    .line 765
+    .line 773
     invoke-virtual {p5, v3}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
 
-    .line 766
+    .line 774
     new-instance v1, Landroid/widget/LinearLayout;
 
     iget-object v2, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v1, v2}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 767
+    .line 775
     invoke-virtual {v1, v0}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 768
+    .line 776
     invoke-virtual {v1, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 769
+    .line 777
     invoke-virtual {p5, v1}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
 
-    .line 771
+    .line 779
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const v1, 0x104000a
@@ -4066,7 +4153,7 @@
 
     invoke-virtual {p5, v0, v1}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
 
-    .line 790
+    .line 798
     iget-object p1, v2, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const/high16 p2, 0x1040000
@@ -4081,7 +4168,7 @@
 
     invoke-virtual {p5, p1, p2}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
 
-    .line 797
+    .line 805
     invoke-virtual {p5}, Landroid/app/AlertDialog$Builder;->show()Landroid/app/AlertDialog;
 
     return-void
@@ -4090,7 +4177,7 @@
 .method synthetic lambda$InputText$15$com-android-support-CkHomuraMenu(Landroid/view/View;Z)V
     .registers 4
 
-    .line 826
+    .line 834
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const-string v0, "input_method"
@@ -4107,7 +4194,7 @@
 
     const/4 p2, 0x2
 
-    .line 828
+    .line 836
     invoke-virtual {p1, p2, v0}, Landroid/view/inputmethod/InputMethodManager;->toggleSoftInput(II)V
 
     return-void
@@ -4115,7 +4202,7 @@
     :cond_12
     const/4 p2, 0x0
 
-    .line 830
+    .line 838
     invoke-virtual {p1, v0, p2}, Landroid/view/inputmethod/InputMethodManager;->toggleSoftInput(II)V
 
     return-void
@@ -4124,7 +4211,7 @@
 .method synthetic lambda$InputText$16$com-android-support-CkHomuraMenu(Landroid/widget/EditText;Landroid/widget/Button;Ljava/lang/String;ILandroid/content/DialogInterface;I)V
     .registers 8
 
-    .line 843
+    .line 851
     invoke-virtual {p1}, Landroid/widget/EditText;->getText()Landroid/text/Editable;
 
     move-result-object p5
@@ -4133,30 +4220,42 @@
 
     move-result-object p5
 
-    .line 844
+    .line 852
     new-instance p6, Ljava/lang/StringBuilder;
 
     invoke-direct {p6}, Ljava/lang/StringBuilder;-><init>()V
 
     invoke-virtual {p6, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p6
+
     const-string v0, ": <font color=\'"
 
     invoke-virtual {p6, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p6
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->NumberTxtColor:Ljava/lang/String;
 
     invoke-virtual {p6, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p6
+
     const-string v0, "\'>"
 
     invoke-virtual {p6, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p6
+
     invoke-virtual {p6, p5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p6
 
     const-string v0, "</font>"
 
     invoke-virtual {p6, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p6
 
     invoke-virtual {p6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -4168,12 +4267,12 @@
 
     invoke-virtual {p2, p6}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 845
+    .line 853
     invoke-static {p3, p4, p5}, Lcom/android/support/Preferences;->changeFeatureString(Ljava/lang/String;ILjava/lang/String;)V
 
     const/4 p2, 0x0
 
-    .line 846
+    .line 854
     invoke-virtual {p1, p2}, Landroid/widget/EditText;->setFocusable(Z)V
 
     return-void
@@ -4182,7 +4281,7 @@
 .method synthetic lambda$InputText$17$com-android-support-CkHomuraMenu(Landroid/content/DialogInterface;I)V
     .registers 4
 
-    .line 851
+    .line 859
     iget-object p1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const-string p2, "input_method"
@@ -4197,7 +4296,7 @@
 
     const/4 v0, 0x0
 
-    .line 852
+    .line 860
     invoke-virtual {p1, p2, v0}, Landroid/view/inputmethod/InputMethodManager;->toggleSoftInput(II)V
 
     return-void
@@ -4206,39 +4305,39 @@
 .method synthetic lambda$InputText$18$com-android-support-CkHomuraMenu(Landroid/widget/Button;Ljava/lang/String;ILandroid/view/View;)V
     .registers 12
 
-    .line 822
+    .line 830
     new-instance p4, Landroid/app/AlertDialog$Builder;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {p4, v0}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
 
-    .line 824
+    .line 832
     new-instance v3, Landroid/widget/EditText;
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     invoke-direct {v3, v0}, Landroid/widget/EditText;-><init>(Landroid/content/Context;)V
 
-    .line 825
+    .line 833
     new-instance v0, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda10;
 
     invoke-direct {v0, p0}, Lcom/android/support/CkHomuraMenu$$ExternalSyntheticLambda10;-><init>(Lcom/android/support/CkHomuraMenu;)V
 
     invoke-virtual {v3, v0}, Landroid/widget/EditText;->setOnFocusChangeListener(Landroid/view/View$OnFocusChangeListener;)V
 
-    .line 833
+    .line 841
     invoke-virtual {v3}, Landroid/widget/EditText;->requestFocus()Z
 
-    .line 835
+    .line 843
     const-string v0, "Input text"
 
     invoke-virtual {p4, v0}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
 
-    .line 836
+    .line 844
     invoke-virtual {p4, v3}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
 
-    .line 837
+    .line 845
     new-instance v0, Landroid/widget/LinearLayout;
 
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
@@ -4247,16 +4346,16 @@
 
     const/4 v1, 0x1
 
-    .line 838
+    .line 846
     invoke-virtual {v0, v1}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 839
+    .line 847
     invoke-virtual {v0, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
-    .line 840
+    .line 848
     invoke-virtual {p4, v0}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
 
-    .line 842
+    .line 850
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const v1, 0x104000a
@@ -4279,7 +4378,7 @@
 
     invoke-virtual {p4, v0, v1}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
 
-    .line 849
+    .line 857
     iget-object p1, v2, Lcom/android/support/CkHomuraMenu;->getContext:Landroid/content/Context;
 
     const/high16 p2, 0x1040000
@@ -4294,7 +4393,7 @@
 
     invoke-virtual {p4, p1, p2}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
 
-    .line 855
+    .line 863
     invoke-virtual {p4}, Landroid/app/AlertDialog$Builder;->show()Landroid/app/AlertDialog;
 
     return-void
@@ -4303,28 +4402,38 @@
 .method synthetic lambda$RadioButton$20$com-android-support-CkHomuraMenu(Landroid/widget/TextView;Ljava/lang/String;Ljava/lang/String;ILandroid/widget/RadioGroup;Landroid/widget/RadioButton;Landroid/view/View;)V
     .registers 9
 
-    .line 899
+    .line 907
     new-instance p7, Ljava/lang/StringBuilder;
 
     invoke-direct {p7}, Ljava/lang/StringBuilder;-><init>()V
 
     invoke-virtual {p7, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p7
+
     const-string v0, ": <font color=\'"
 
     invoke-virtual {p7, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object p7
 
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->NumberTxtColor:Ljava/lang/String;
 
     invoke-virtual {p7, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p7
+
     const-string v0, "\'>"
 
     invoke-virtual {p7, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
+    move-result-object p7
+
     invoke-virtual {p7, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {p7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result-object p3
+
+    invoke-virtual {p3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object p3
 
@@ -4334,7 +4443,7 @@
 
     invoke-virtual {p1, p3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 900
+    .line 908
     invoke-virtual {p5, p6}, Landroid/widget/RadioGroup;->indexOfChild(Landroid/view/View;)I
 
     move-result p1
@@ -4498,12 +4607,12 @@
 .method public onDestroy()V
     .registers 3
 
-    .line 1008
+    .line 1016
     iget-object v0, p0, Lcom/android/support/CkHomuraMenu;->rootFrame:Landroid/widget/FrameLayout;
 
     if-eqz v0, :cond_9
 
-    .line 1009
+    .line 1017
     iget-object v1, p0, Lcom/android/support/CkHomuraMenu;->mWindowManager:Landroid/view/WindowManager;
 
     invoke-interface {v1, v0}, Landroid/view/WindowManager;->removeView(Landroid/view/View;)V
