@@ -8,8 +8,11 @@ name: build-n-publish
 #   3. Compila libSrcExt.so (Main.cpp, NDK r14b = mismo gcc 4.9/gnustl
 #      que r10e, el unico NDK viejo que dl.google.com aun hospeda)
 #      para arm64-v8a (And64InlineHook) y armeabi-v7a (Arm32InlineHook)
-#   4. Parcha el smali: agrega System.loadLibrary("SrcExt") en
-#      SmaliApp/.../SexyAppFrameworkActivity
+#   4. Parcha el smali:
+#      a) loadLibrary("SrcExt") tras CADA loadLibrary("Src") en
+#         SexyAppFrameworkActivity (LazyCreate y onCreate)
+#      b) TalkwebProxy: loginChannel() -> UserInfo falso + init() sin
+#         initSDK/getQuickRegistration (login offline)
 #   5. Rebuild con apktool, zipalign, firma CN=Offline (apksigner)
 #   6. Publica: artifact + GitHub Release opcional
 
@@ -133,18 +136,18 @@ jobs:
           cp -v libs/armeabi-v7a/libSrcExt.so ws/lib/armeabi-v7a/libSrcExt.so
           ls -la ws/lib/arm64-v8a/ ws/lib/armeabi-v7a/
 
-      - name: Parchar smali (loadLibrary SrcExt)
+      - name: Parchar smali (loadLibrary SrcExt en CADA sitio)
         run: |
           set -euo pipefail
           python3 patch/patch_smali.py ws/smali/com/popcap/SexyAppFramework/SexyAppFrameworkActivity.smali
           echo "--- bloque resultante ---"
           grep -n -A2 'const-string .*"Src' \
-            ws/smali/com/popcap/SexyAppFramework/SexyAppFrameworkActivity.smali | head -20
+            ws/smali/com/popcap/SexyAppFramework/SexyAppFrameworkActivity.smali | head -30
 
-      - name: Patch login (salta sesion tw SDK)
+      - name: Parchar TalkwebProxy (login offline)
         run: |
           set -euo pipefail
-          python3 patch/patch_login.py 'ws/smali/com/popcap/purchase/TW/TWPurchase$1$1.smali'
+          python3 patch/patch_talkweb.py ws/smali/com/talkweb/twOfflineSdk/TalkwebProxy.smali
 
       - name: Rebuild APK (apktool b)
         run: |
@@ -210,7 +213,7 @@ jobs:
             - Motor: swap libSrc.so en arm64-v8a (73MB -> 104MB) y armeabi-v7a (45MB -> 77MB)
             - Hooks nativos libSrcExt.so (Main.cpp): firma, offline, SyncPlayerInfoFinish,
               Lua engine desactivado, tutoriales/comodines (arm64: And64InlineHook, v7a: Arm32InlineHook)
-            - Smali: loadLibrary("SrcExt")
+            - Smali: loadLibrary("SrcExt") en todos los puntos de carga + TalkwebProxy con login offline (UserInfo falso)
             - Firma: CN=Offline (no oficial)
           files: ${{ inputs.apk_name }}
           make_latest: true

@@ -3,18 +3,26 @@
 """
 patch_smali.py — P.V.Z 2 China Touched.
 
-Inserta, tras el System.loadLibrary("Src") del MotorActivity, el bloque:
+Inserta, tras CADA System.loadLibrary("Src") de SexyAppFrameworkActivity, el bloque:
 
     const-string <vN>, "SrcExt"
     invoke-static {<vN>}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
 
 que carga libSrcExt.so (los hooks nativos de offline) después de libSrc.so.
 
+IMPORTANTE: el archivo tiene DOS puntos que cargan libSrc.so:
+  - LazyCreate(Bundle)   -> usado en algunos flujos ("preinstalado")
+  - onCreate(Bundle)     -> el que se ejecuta SIEMPRE al arrancar
+
+El engine real se inicia por onCreate(); inyectar solo en el primero dejaba
+libSrcExt.so sin cargar (ni rastro en /proc/maps, ni hooks). Por eso el patch
+recorre TODOS los sitios "Src" y añade la carga de la extensión en cada uno.
+System.loadLibrary es idempotente, asi que es seguro tenerlo en ambos.
+
+Idempotente por sitio: si el bloque "SrcExt" ya acompaña a un "Src", lo deja.
+
 Uso:
     python3 patch_smali.py <ruta/a/SexyAppFrameworkActivity.smali>
-
-Es idempotente: si ya existe la cadena "SrcExt" en el archivo, reporta
-"YA parcheado" y termina con codigo 0.
 """
 
 import re
@@ -22,27 +30,31 @@ import sys
 
 LOADLIB = "Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V"
 
+SRC_RE = re.compile(
+    r"^\s*const-string\s+(v\d+),\s*\"Src\"\s*\n"
+    r"(?:[ \t]*(?:#[^\n]*)?\n)*"               # lineas en blanco / comentarios
+    r"[ \t]*invoke-static\s*\{\1\},\s*"
+    + re.escape(LOADLIB)
+    + r"\s*\n",
+    re.MULTILINE,
+)
+
+EXT_RE = re.compile(
+    r"[ \t]*const-string\s+(v\d+),\s*\"SrcExt\"\s*\n"
+    r"(?:[ \t]*(?:#[^\n]*)?\n)*"
+    r"[ \t]*invoke-static\s*\{\1\},\s*"
+    + re.escape(LOADLIB)
+    + r"\s*\n",
+    re.MULTILINE,
+)
+
 
 def patch(path: str) -> int:
     with open(path, encoding="utf-8") as f:
         src = f.read()
 
-    if '"SrcExt"' in src:
-        print("[i] YA parcheado (%s)" % path)
-        return 0
-
-    # const-string vN, "Src" ... invoke-static {vN}, System.loadLibrary
-    pattern = re.compile(
-        r"^\s*const-string\s+(v\d+),\s*\"Src\"\s*\n"
-        r"(?:\s*#.*\n|\s*\n)*"                       # tolera lineas en blanco / comentarios
-        r"\s*invoke-static\s*\{\1\},\s*"
-        + re.escape(LOADLIB)
-        + r"\s*\n",
-        re.MULTILINE,
-    )
-
-    m = pattern.search(src)
-    if not m:
+    blocks = list(SRC_RE.finditer(src))
+    if not blocks:
         print(
             "ERR: no se encontro const-string vN,\"Src\" + loadLibrary(%s) en %s"
             % (LOADLIB, path),
@@ -50,7 +62,6 @@ def patch(path: str) -> int:
         )
         return 1
 
-    reg = m.group(1)
     indent = " " * 4
     inject = (
         "\n"
@@ -58,12 +69,28 @@ def patch(path: str) -> int:
         + 'const-string %s, "SrcExt"\n'
         + indent
         + "invoke-static {%s}, %s\n"
-    ) % (reg, reg, LOADLIB)
+    )
 
-    src = src[: m.end()] + inject + src[m.end():]
+    changes = []
+    for m in blocks:
+        reg = m.group(1)
+        tail = src[m.end(): m.end() + 800]
+        if EXT_RE.search(tail):
+            print("[i] sitio con SrcExt ya presente (reg=%s)" % reg)
+            continue
+        changes.append((m.end(), inject % (reg, reg, LOADLIB), reg))
+
+    for end, text, reg in reversed(changes):
+        src = src[:end] + text + src[end:]
+
     with open(path, "w", encoding="utf-8") as f:
         f.write(src)
-    print("OK: loadLibrary(\"SrcExt\") insertado con registro %s" % reg)
+
+    if not changes:
+        print("[i] YA parcheado (%s)" % path)
+        return 0
+    print("OK: loadLibrary(\"SrcExt\") insertado en %d sitio(s): %s" % (
+        len(changes), ", ".join(c[2] for c in changes)))
     return 0
 
 

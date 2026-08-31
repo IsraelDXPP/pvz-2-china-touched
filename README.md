@@ -17,6 +17,15 @@ motor con la tabla de símbolos exportada (necesario para los hooks nativos),
 - Tutoriales (gacha/accessory/recharge/transgénesis) → completados
 - `IsUnlockRechargeNode(DoubleSpeed)` → `true`
 
+### Smali
+
+- `loadLibrary("SrcExt")` se inyecta tras **cada** `loadLibrary("Src")` en
+  `SexyAppFrameworkActivity` (tanto `LazyCreate` como `onCreate`), para que los
+  hooks nativos siempre se carguen después del motor.
+- `TalkwebProxy` (SDK de la 360): `loginChannel()` responde un `UserInfo` falso
+  y `init()` omiten `initSDK`/`getQuickRegistration` → el juego arranca sin
+  dialogo de login ni chequeo del servidor TalkWeb.
+
 Se compila para **arm64-v8a** y **armeabi-v7a**.
 
 ## Cómo funciona el "touched"
@@ -46,9 +55,16 @@ Los hooks viven en:
 3. **Decodificar**: `apktool d -f -o ws original.apk`.
 4. **Swap**: `lib/<ABI>/libSrc.so` stock → touched (ambas ABIs).
 5. **Inyección**: `lib/<ABI>/libSrcExt.so`.
-6. **Smali**: inserta `System.loadLibrary("SrcExt")` junto a `loadLibrary("Src")`
-   en `SexyAppFrameworkActivity.smali` (ver `patch/patch_smali.py`, idempotente).
-7. **Empaquetar**: `apktool b` → `zipalign` → `apksigner` (keystore `CN=Offline`).
+6. **Smali**: inserta `System.loadLibrary("SrcExt")` junto a **cada**
+   `loadLibrary("Src")` en `SexyAppFrameworkActivity.smali` — hay dos puntos
+   de carga: `LazyCreate(Bundle)` y `onCreate(Bundle)`; el motor se inicia por
+   `onCreate`, así que la extensión se carga en ambos (ver
+   `patch/patch_smali.py`, idempotente).
+7. **Smali (TalkwebProxy)**: `loginChannel()` devuelve un `UserInfo` falso
+   (channelUserId/talkwebUserId fijos, sin red) y `init()` omite
+   `TwOnlineSDK.initSDK` / `TwLoginUtil.getQuickRegistration` — así el SDK de
+   la 360 arranca sin dialogo de login ni registro HTTP (ver `patch/patch_talkweb.py`).
+8. **Empaquetar**: `apktool b` → `zipalign` → `apksigner` (keystore `CN=Offline`).
 
 ## Uso — GitHub Actions
 
