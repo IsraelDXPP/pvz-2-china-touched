@@ -1,6 +1,7 @@
 #include <android/log.h>
 #include <dlfcn.h>
 #include <stdint.h>
+#include <jni.h>
 
 #include "LawnApp.h"
 #include "StarConvert.h"
@@ -62,10 +63,129 @@ int64_t RetTrue()
     return 1;
 }
 
+// --- Estado de los trucos del menu (feature ids: 1..5) ---
+static volatile int g_infiniteSun   = 0;  // 1_Toggle (boton) -> no consume sol
+static volatile int g_addSunPending = 0;  // 2_Button  +1000 (se consume en Board::Update)
+static volatile int g_freePlants    = 0;  // 3_Toggle  -> plantas y sol gratis
+static volatile int g_noCooldown    = 0;  // 4_Toggle  -> cooldown de tarjetas a 0
+static volatile int g_victoryPending= 0;  // 5_Button  -> victoria inmediata (Board::Update)
+
+// --- Natives del menu (com.android.support.CkHomuraMenu / Preferences) ---
+static const char *gt_featureList[] = {
+    "1_Toggle_Sol Infinito",
+    "2_Button_+1000 Sol",
+    "3_Toggle_Plantas Gratis",
+    "4_Toggle_Sin Enfriamiento",
+    "5_Button_Victoria Instantánea",
+};
+
+static const char *gt_settingsList[] = {
+    "-1_Toggle_Save Settings on Exit",
+};
+
+extern "C" JNIEXPORT jobjectArray JNICALL
+Java_com_android_support_CkHomuraMenu_GetFeatureList(JNIEnv *env, jobject thiz)
+{
+    int n = (int)(sizeof(gt_featureList) / sizeof(gt_featureList[0]));
+    jclass strCls = env->FindClass("java/lang/String");
+    jobjectArray ret = env->NewObjectArray(n, strCls, nullptr);
+    for (int i = 0; i < n; ++i)
+        env->SetObjectArrayElement(ret, i, env->NewStringUTF(gt_featureList[i]));
+    return ret;
+}
+
+extern "C" JNIEXPORT jobjectArray JNICALL
+Java_com_android_support_CkHomuraMenu_SettingsList(JNIEnv *env, jobject thiz)
+{
+    int n = (int)(sizeof(gt_settingsList) / sizeof(gt_settingsList[0]));
+    jclass strCls = env->FindClass("java/lang/String");
+    jobjectArray ret = env->NewObjectArray(n, strCls, nullptr);
+    for (int i = 0; i < n; ++i)
+        env->SetObjectArrayElement(ret, i, env->NewStringUTF(gt_settingsList[i]));
+    return ret;
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_android_support_CkHomuraMenu_GetCurrentFormation(JNIEnv *env, jobject thiz)
+{
+    return env->NewStringUTF("");
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_android_support_Preferences_Changes(JNIEnv *env, jclass clazz, jobject con, jint fNum,
+    jstring fName, jint value, jboolean b, jstring str)
+{
+    switch (fNum) {
+    case 1: g_infiniteSun = (b == JNI_TRUE); break;
+    case 2: g_addSunPending += 1000; break;
+    case 3: g_freePlants = (b == JNI_TRUE); break;
+    case 4: g_noCooldown = (b == JNI_TRUE); break;
+    case 5: g_victoryPending = 1; break;
+    default: break;
+    }
+    LOGI("Changes(fNum=%d, value=%d, bool=%d)", (int)fNum, (int)value, (int)b);
+}
+
 void TryCheckAccount()
 {
     LOGI("TryCheckAccount -> broadcast SyncPlayerInfoFinish(true)");
     gMessageRouter->Broadcast(Message::SyncPlayerInfoFinish, true);
+}
+
+// --- Hooks del menu de trucos ---
+typedef bool (*TakeSunMoney_t)(void *self, int i_amount, bool i_force, bool i_theme);
+static TakeSunMoney_t _TakeSunMoney = nullptr;
+
+bool TakeSunMoneyHook(void *self, int i_amount, bool i_force, bool i_theme)
+{
+    if (g_infiniteSun || g_freePlants)
+        return true;                      // sin dedicción ni mensajes rotos
+    return _TakeSunMoney(self, i_amount, i_force, i_theme);
+}
+
+typedef bool (*CanTakeSunMoney_t)(void *self, int i_amount);
+static CanTakeSunMoney_t _CanTakeSunMoney = nullptr;
+
+bool CanTakeSunMoneyHook(void *self, int i_amount)
+{
+    if (g_freePlants || g_infiniteSun)
+        return true;
+    return _CanTakeSunMoney(self, i_amount);
+}
+
+typedef void *(*updateState_NotReady_t)(void *self);
+static updateState_NotReady_t _updateState_NotReady = nullptr;
+
+void *updateState_NotReadyHook(void *self)
+{
+    if (g_noCooldown)
+        *(float *)((char *)self + 404) = 0.0f;  // m_cooldownEndTime -> listo
+    return _updateState_NotReady(self);
+}
+
+typedef void (*BoardUpdate_t)(void *self);
+static BoardUpdate_t _BoardUpdate = nullptr;
+typedef void (*BoardAddSunMoney_t)(void *self, int i_amount);
+static BoardAddSunMoney_t _BoardAddSunMoney = nullptr;
+typedef void (*BoardPlayerWon_t)(void *self);
+static BoardPlayerWon_t _BoardPlayerWon = nullptr;
+
+void BoardUpdateHook(void *self)
+{
+    if (g_addSunPending > 0) {
+        int amount = g_addSunPending;
+        g_addSunPending = 0;
+        if (_BoardAddSunMoney)
+            _BoardAddSunMoney(self, amount);
+    }
+    if (g_victoryPending
+            && *(int *)((char *)self + 0x104) != 0xA          // no en ended
+            && *(int *)((char *)self + 0xAC0) == 0) {         // no ya ganado
+        g_victoryPending = 0;
+        if (_BoardPlayerWon)
+            _BoardPlayerWon(self);
+    }
+    _BoardUpdate(self);
 }
 
 void (*_OnStarConverted)(StarConvertObject *self, bool i_success);
@@ -134,6 +254,24 @@ void mainFunc()
     // Offline: forzar el sincronizado de cache de red como "completado" para
     // que el juego siga adelante sin conexion.
     SafeHook("_ZN14NetworkItemMgr27HasNetworkCacheSyncCompleteEv", (void *)RetTrue);
+
+    // Menu de trucos: hooks seguros (todos con tamaño suficiente para inline)
+    SafeHook("_ZN5Board12TakeSunMoneyEibb",
+        (void *)TakeSunMoneyHook, (void **)&_TakeSunMoney);
+    SafeHook("_ZN5Board15CanTakeSunMoneyEi",
+        (void *)CanTakeSunMoneyHook, (void **)&_CanTakeSunMoney);
+    SafeHook("_ZN10SeedPacket20updateState_NotReadyEv",
+        (void *)updateState_NotReadyHook, (void **)&_updateState_NotReady);
+    SafeHook("_ZN5Board6UpdateEv",
+        (void *)BoardUpdateHook, (void **)&_BoardUpdate);
+
+    // Apuntadores helper (sin hookear): AddSunMoney y PlayerWon
+    _BoardAddSunMoney = (BoardAddSunMoney_t)SafeResolve("_ZN5Board11AddSunMoneyEi");
+    _BoardPlayerWon  = (BoardPlayerWon_t)SafeResolve("_ZN5Board9PlayerWonEv");
+    if (_BoardAddSunMoney == nullptr)
+        LOGW("menu: AddSunMoney no resuelto");
+    if (_BoardPlayerWon == nullptr)
+        LOGW("menu: PlayerWon no resuelto");
 
     LOGI("libSrcExt: hooks instalados (ok=%d, fail=%d)", g_hookOk, g_hookFail);
     LOGI("libSrcExt: listo!");

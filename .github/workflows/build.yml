@@ -14,6 +14,8 @@ name: build-n-publish
 #         SexyAppFrameworkActivity (LazyCreate y onCreate)
 #      b) TalkwebProxy: loginChannel() -> UserInfo falso + init() sin
 #         initSDK/getQuickRegistration (login offline)
+#      c) CkHomuraMenu: copia smali_classes5 + patch SexyAppActivity.onCreate
+#         con try/catch que instancie y muestre el menú de trucos
 #   5. Rebuild con apktool, zipalign, firma CN=Offline (apksigner)
 #   6. Publica: artifact + GitHub Release opcional
 
@@ -168,6 +170,17 @@ jobs:
           set -euo pipefail
           python3 patch/patch_talkweb.py ws/smali/com/talkweb/twOfflineSdk/TalkwebProxy.smali
 
+      - name: Inyectar menú CkHomuraMenu (smali_classes5 + patch onCreate)
+        run: |
+          set -euo pipefail
+          cp -rv menu/smali_classes5 ws/smali_classes5
+          ls ws/smali_classes5/com/android/support/ | head -5
+          echo "count:"; ls ws/smali_classes5/com/android/support/ | wc -l
+          python3 patch/patch_menu.py ws/smali/com/popcap/pvz2cthd360/SexyAppActivity.smali
+          echo "--- onCreate resultante ---"
+          grep -n -A3 'CkHomuraMenu' \
+            ws/smali/com/popcap/pvz2cthd360/SexyAppActivity.smali | head -15
+
       - name: Renombrar la app instalada (launcher)
         run: |
           set -euo pipefail
@@ -238,6 +251,8 @@ jobs:
             - Motor: libSrc.so touched en arm64-v8a y armeabi-v7a (símbolos exportados; 13/13
             - Hooks nativos libSrcExt.so (Main.cpp): firma, offline, SyncPlayerInfoFinish,
               Lua engine desactivado, tutoriales/comodines (arm64: And64InlineHook, v7a: Arm32InlineHook)
+              + 5 cheats menu: Sol infinito, +1000 Sol, Plantas gratis, Sin enfriamiento, Victoria instantanea
+            - Menú flotante CkHomuraMenu (smali_classes5, Homura-style): 5 hacks via SafeHook sobre Board/SeedPacket
             - Smali: loadLibrary("SrcExt") en todos los puntos de carga + TalkwebProxy con login offline (UserInfo falso)
             - Firma: CN=Offline (no oficial)
           files: ${{ inputs.apk_name }}
