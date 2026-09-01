@@ -173,7 +173,12 @@ jobs:
       - name: Inyectar menú CkHomuraMenu (smali_classes5 + patch onCreate)
         run: |
           set -euo pipefail
-          cp -rv menu/smali_classes5 ws/smali_classes5
+          # Fusionar LOS CONTENIDOS de nuetro smali dentro del dir existente del APK
+          # decodificado ("./" tras la fuente). Si usamos "menu/smali_classes5 <dir>"
+          # se crea un subdirectorio anidado smali_classes5/smali_classes5 y se DEJA
+          # intacto el CkHomuraMenu.smali viejo (texto ON/OFF) que ya trae el APK base.
+          mkdir -p ws/smali_classes5
+          cp -rv menu/smali_classes5/. ws/smali_classes5/
           ls ws/smali_classes5/com/android/support/ | head -5
           echo "count:"; ls ws/smali_classes5/com/android/support/ | wc -l
           python3 patch/patch_menu.py ws/smali/com/popcap/pvz2cthd360/SexyAppActivity.smali

@@ -153,8 +153,8 @@ static TakeSunMoney_t _TakeSunMoney = nullptr;
 
 bool TakeSunMoneyHook(void *self, int i_amount, bool i_force, bool i_theme)
 {
-    if (g_freePlants)
-        return true;                      // plantar gratis: no se deduce sol
+    if (g_freePlants || g_infiniteSun)
+        return true;                      // plantar gratis / sol infinito: no se deduce sol
     return _TakeSunMoney(self, i_amount, i_force, i_theme);
 }
 
@@ -163,7 +163,7 @@ static CanTakeSunMoney_t _CanTakeSunMoney = nullptr;
 
 bool CanTakeSunMoneyHook(void *self, int i_amount)
 {
-    if (g_freePlants)
+    if (g_freePlants || g_infiniteSun)
         return true;
     return _CanTakeSunMoney(self, i_amount);
 }
@@ -199,10 +199,11 @@ void BoardUpdateHook(void *self)
     }
 
     // Sol infinito: mantener el contador clavado en 9990 mientras este activo.
+    // m_sunCurrency es un LawnKeyField (dato ofuscado con encode/decode), asi que NO
+    // se puede comparar el raw como int: SetSunMoney(9990) re-encoda correctamente.
+    // Se llama cada frame para que el sol nunca baje de 9990.
     if (g_infiniteSun && _BoardSetSunMoney) {
-        int cur = *(int *)((char *)self + BOARD_SUN_OFFSET);
-        if (cur < 9990)
-            _BoardSetSunMoney(self, 9990);
+        _BoardSetSunMoney(self, 9990);
     }
 
     // Victoria instantanea: el flujo real del juego (Board::PlayerWon) se encarga
