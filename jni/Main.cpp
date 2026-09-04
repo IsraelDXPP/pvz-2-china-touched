@@ -102,7 +102,6 @@ static const char *gt_featureList[] = {
     "5_Button_Victoria Instantanea",
     "6_Button_Desbloquear Todas las Plantas",
     "8_Button_Estrella +1 en el nivel",
-    "9_Button_Perfil Super",
     "16_Button_Saltar Nivel",
     "17_Button_Recargar Nivel",
     "18_Button_Desbloquear Todos los Niveles",
@@ -158,7 +157,6 @@ typedef void (*CheatFn_t)();            // void PVZCheats::CheatXxx()
 typedef void (*CheatBoolFn_t)(bool);    // void PVZCheats::CheatXxx(bool)
 static CheatFn_t _CheatAdd10000Gems   = nullptr;
 static CheatFn_t _CheatAddStar        = nullptr;
-static CheatFn_t _CheatProfileSuper   = nullptr;
 static CheatFn_t _CheatGiveLotsOfSun  = nullptr;
 static CheatFn_t _CheatKillAllZombies = nullptr;
 static CheatFn_t _CheatAdd10000000Coins = nullptr;
@@ -187,7 +185,6 @@ Java_com_android_support_Preferences_Changes(JNIEnv *env, jclass clazz, jobject 
     case 6: g_unlockPlantsPending = 1; break;
     case 7: if (_CheatAdd10000Gems)  _CheatAdd10000Gems();  break;
     case 8: if (_CheatAddStar)       _CheatAddStar();       break;
-    case 9: if (_CheatProfileSuper)  _CheatProfileSuper();  break;
     case 10: if (_CheatGiveLotsOfSun) _CheatGiveLotsOfSun(); break;
     case 11: g_killZombiesPending = 1; break;
     case 12: if (_CheatAdd10000000Coins) _CheatAdd10000000Coins(); break;
@@ -398,25 +395,24 @@ void mainFunc()
     _BoardSetSunMoney = (BoardSetSunMoney_t)SafeResolve("_ZN5Board11SetSunMoneyEi");
     _BoardPlayerWon  = (BoardPlayerWon_t)SafeResolve("_ZN5Board9PlayerWonEv");
     _BoardGetPlantfoodMax = (BoardGetPlantfoodMax_t)SafeResolve("_ZN5Board15GetPlantfoodMaxEv");
-    _BoardSetPlantfoodCount = (BoardSetPlantfoodCount_t)SafeResolve("_ZN5Board19SetPlantfoodCountEi");
+    _BoardSetPlantfoodCount = (BoardSetPlantfoodCount_t)SafeResolve("_ZN5Board17SetPlantfoodCountEi");
     _UnlockAllPlants = (UnlockAllPlants_t)SafeResolve("_ZN9PVZCheats15UnlockAllPlantsEv");
 
     _CheatAdd10000Gems  = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatAdd10000GemsEv");
     _CheatAddStar       = (CheatFn_t)SafeResolve("_ZN9PVZCheats12CheatAddStarEv");
-    _CheatProfileSuper  = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatProfileSuperEv");
     _CheatGiveLotsOfSun = (CheatFn_t)SafeResolve("_ZN9PVZCheats18CheatGiveLotsOfSunEv");
-    _CheatKillAllZombies = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatKillAllZombiesEv");
-    _CheatAdd10000000Coins = (CheatFn_t)SafeResolve("_ZN9PVZCheats24CheatAdd10000000CoinsEv");
+    _CheatKillAllZombies = (CheatFn_t)SafeResolve("_ZN9PVZCheats19CheatKillAllZombiesEv");
+    _CheatAdd10000000Coins = (CheatFn_t)SafeResolve("_ZN9PVZCheats21CheatAdd10000000CoinsEv");
     _CheatSkipLevel     = (CheatFn_t)SafeResolve("_ZN9PVZCheats12CheatSkipLevelEv");
-    _CheatReloadLevel   = (CheatFn_t)SafeResolve("_ZN9PVZCheats15CheatReloadLevelEv");
-    _CheatUnlockLevels  = (CheatFn_t)SafeResolve("_ZN9PVZCheats18CheatUnlockLevelsEv");
-    _CheatAdd100Leafs   = (CheatFn_t)SafeResolve("_ZN9PVZCheats15CheatAdd100LeafsEv");
+    _CheatReloadLevel   = (CheatFn_t)SafeResolve("_ZN9PVZCheats16CheatReloadLevelEv");
+    _CheatUnlockLevels  = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatUnlockLevelsEv");
+    _CheatAdd100Leafs   = (CheatFn_t)SafeResolve("_ZN9PVZCheats16CheatAdd100LeafsEv");
     _CheatCherryBombardment = (CheatFn_t)SafeResolve("_ZN9PVZCheats22CheatCherryBombardmentEv");
     _CheatWallOfPlants  = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatWallOfPlantsEv");
-    _CheatSpawnNextWave = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatSpawnNextWaveEv");
-    _CheatFastMotion    = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats16CheatFastMotionEb");
-    _CheatSlowMotion    = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats16CheatSlowMotionEb");
-    _CheatFreeze        = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats10CheatFreezeEb");
+    _CheatSpawnNextWave = (CheatFn_t)SafeResolve("_ZN9PVZCheats18CheatSpawnNextWaveEv");
+    _CheatFastMotion    = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats15CheatFastMotionEb");
+    _CheatSlowMotion    = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats15CheatSlowMotionEb");
+    _CheatFreeze        = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats11CheatFreezeEb");
     _CheatEasyPlanting  = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats17CheatEasyPlantingEb");
     if (_BoardAddSunMoney == nullptr)
         LOGW("menu: AddSunMoney no resuelto");
@@ -434,8 +430,6 @@ void mainFunc()
         LOGW("menu: CheatAdd10000Gems no resuelto");
     if (_CheatAddStar == nullptr)
         LOGW("menu: CheatAddStar no resuelto");
-    if (_CheatProfileSuper == nullptr)
-        LOGW("menu: CheatProfileSuper no resuelto");
     if (_CheatGiveLotsOfSun == nullptr)
         LOGW("menu: CheatGiveLotsOfSun no resuelto");
     if (_CheatKillAllZombies == nullptr)
