@@ -63,22 +63,50 @@ int64_t RetTrue()
     return 1;
 }
 
-// --- Estado de los trucos del menu (feature ids: 1..6) ---
+// --- Estado de los trucos del menu (feature ids: 1..24) ---
 static volatile int g_infiniteSun       = 0;  // 1_Toggle -> contador de sol fijo en 9990 (no baja)
 static volatile int g_addSunPending     = 0;  // 2_Button  +1000 (se consume en Board::Update)
-static volatile int g_freePlants        = 0;  // 3_Toggle  -> plantar sin gastar sol (free planting)
+static volatile int g_easyPlanting      = 0;  // 3_Toggle  -> plantar facil (PVZCheats::CheatEasyPlanting)
 static volatile int g_noCooldown        = 0;  // 4_Toggle  -> cooldown de tarjetas a 0
 static volatile int g_victoryPending    = 0;  // 5_Button  -> victoria inmediata (Board::Update)
 static volatile int g_unlockPlantsPending = 0; // 6_Button  -> desbloquear todas las plantas (Board::Update)
+static volatile int g_killZombiesPending = 0; // 11_Button -> matar todos los zombis
+static volatile int g_fastMotion        = 0;  // 13_Toggle -> velocidad rapida
+static volatile int g_slowMotion        = 0;  // 14_Toggle -> velocidad lenta
+static volatile int g_oneHitKill        = 0;  // 23_Toggle -> dano x10
+static volatile int g_infinitePlantFood = 0;  // 24_Toggle -> alimento de planta infinito
 
 // --- Natives del menu (com.android.support.CkHomuraMenu / Preferences) ---
 static const char *gt_featureList[] = {
+    "Category_--- Recursos ---",
     "1_Toggle_Sol Infinito",
     "2_Button_+1000 Sol",
-    "3_Toggle_Plantas Gratis",
     "4_Toggle_Sin Enfriamiento",
-    "5_Button_Victoria Instantánea",
+    "10_Button_Sol Extra +5000",
+    "12_Button_+10,000,000 Monedas",
+    "19_Button_+100 Hojas",
+    "Category_--- Plantas ---",
+    "3_Toggle_Plantar Facil",
+    "20_Button_Bomba de Cerezas",
+    "21_Button_Muro de Plantas",
+    "23_Toggle_Dano x10",
+    "24_Toggle_Infinito Alimento de Planta",
+    "Category_--- Combate ---",
+    "11_Button_Matar Todos los Zombis",
+    "15_Toggle_Congelar Juego",
+    "22_Button_Siguiente Oleada",
+    "Category_--- Velocidad ---",
+    "13_Toggle_Velocidad Rapida",
+    "14_Toggle_Velocidad Lenta",
+    "Category_--- Progresion ---",
+    "5_Button_Victoria Instantanea",
     "6_Button_Desbloquear Todas las Plantas",
+    "8_Button_Estrella +1 en el nivel",
+    "9_Button_Perfil Super",
+    "16_Button_Saltar Nivel",
+    "17_Button_Recargar Nivel",
+    "18_Button_Desbloquear Todos los Niveles",
+    "7_Button_+10000 Diamantes",
 };
 
 // --- Offsets de campos estructurales, dependientes de ABI ---
@@ -125,6 +153,27 @@ Java_com_android_support_CkHomuraMenu_GetCurrentFormation(JNIEnv *env, jobject t
     return env->NewStringUTF("");
 }
 
+// --- Cheats nativos del juego (PVZCheats) resueltos por simbolo ---
+typedef void (*CheatFn_t)();            // void PVZCheats::CheatXxx()
+typedef void (*CheatBoolFn_t)(bool);    // void PVZCheats::CheatXxx(bool)
+static CheatFn_t _CheatAdd10000Gems   = nullptr;
+static CheatFn_t _CheatAddStar        = nullptr;
+static CheatFn_t _CheatProfileSuper   = nullptr;
+static CheatFn_t _CheatGiveLotsOfSun  = nullptr;
+static CheatFn_t _CheatKillAllZombies = nullptr;
+static CheatFn_t _CheatAdd10000000Coins = nullptr;
+static CheatFn_t _CheatSkipLevel      = nullptr;
+static CheatFn_t _CheatReloadLevel    = nullptr;
+static CheatFn_t _CheatUnlockLevels   = nullptr;
+static CheatFn_t _CheatAdd100Leafs    = nullptr;
+static CheatFn_t _CheatCherryBombardment = nullptr;
+static CheatFn_t _CheatWallOfPlants   = nullptr;
+static CheatFn_t _CheatSpawnNextWave  = nullptr;
+static CheatBoolFn_t _CheatFastMotion   = nullptr;
+static CheatBoolFn_t _CheatSlowMotion   = nullptr;
+static CheatBoolFn_t _CheatFreeze       = nullptr;
+static CheatBoolFn_t _CheatEasyPlanting = nullptr;
+
 extern "C" JNIEXPORT void JNICALL
 Java_com_android_support_Preferences_Changes(JNIEnv *env, jclass clazz, jobject con, jint fNum,
     jstring fName, jint value, jboolean b, jstring str)
@@ -132,10 +181,32 @@ Java_com_android_support_Preferences_Changes(JNIEnv *env, jclass clazz, jobject 
     switch (fNum) {
     case 1: g_infiniteSun = (b == JNI_TRUE); break;
     case 2: g_addSunPending += 1000; break;
-    case 3: g_freePlants = (b == JNI_TRUE); break;
+    case 3: g_easyPlanting = (b == JNI_TRUE); break;
     case 4: g_noCooldown = (b == JNI_TRUE); break;
     case 5: g_victoryPending = 1; break;
     case 6: g_unlockPlantsPending = 1; break;
+    case 7: if (_CheatAdd10000Gems)  _CheatAdd10000Gems();  break;
+    case 8: if (_CheatAddStar)       _CheatAddStar();       break;
+    case 9: if (_CheatProfileSuper)  _CheatProfileSuper();  break;
+    case 10: if (_CheatGiveLotsOfSun) _CheatGiveLotsOfSun(); break;
+    case 11: g_killZombiesPending = 1; break;
+    case 12: if (_CheatAdd10000000Coins) _CheatAdd10000000Coins(); break;
+    case 13: g_fastMotion = (b == JNI_TRUE); g_slowMotion = 0;
+             if (_CheatFastMotion) _CheatFastMotion(b == JNI_TRUE);
+             if (_CheatSlowMotion) _CheatSlowMotion(false); break;
+    case 14: g_slowMotion = (b == JNI_TRUE); g_fastMotion = 0;
+             if (_CheatSlowMotion) _CheatSlowMotion(b == JNI_TRUE);
+             if (_CheatFastMotion) _CheatFastMotion(false); break;
+    case 15: if (_CheatFreeze) _CheatFreeze(b == JNI_TRUE); break;
+    case 16: if (_CheatSkipLevel) _CheatSkipLevel(); break;
+    case 17: if (_CheatReloadLevel) _CheatReloadLevel(); break;
+    case 18: if (_CheatUnlockLevels) _CheatUnlockLevels(); break;
+    case 19: if (_CheatAdd100Leafs) _CheatAdd100Leafs(); break;
+    case 20: if (_CheatCherryBombardment) _CheatCherryBombardment(); break;
+    case 21: if (_CheatWallOfPlants) _CheatWallOfPlants(); break;
+    case 22: if (_CheatSpawnNextWave) _CheatSpawnNextWave(); break;
+    case 23: g_oneHitKill = (b == JNI_TRUE); break;
+    case 24: g_infinitePlantFood = (b == JNI_TRUE); break;
     default: break;
     }
     LOGI("Changes(fNum=%d, value=%d, bool=%d)", (int)fNum, (int)value, (int)b);
@@ -153,7 +224,7 @@ static TakeSunMoney_t _TakeSunMoney = nullptr;
 
 bool TakeSunMoneyHook(void *self, int i_amount, bool i_force, bool i_theme)
 {
-    if (g_freePlants || g_infiniteSun)
+    if (g_easyPlanting || g_infiniteSun)
         return true;                      // plantar gratis / sol infinito: no se deduce sol
     return _TakeSunMoney(self, i_amount, i_force, i_theme);
 }
@@ -163,7 +234,7 @@ static CanTakeSunMoney_t _CanTakeSunMoney = nullptr;
 
 bool CanTakeSunMoneyHook(void *self, int i_amount)
 {
-    if (g_freePlants || g_infiniteSun)
+    if (g_easyPlanting || g_infiniteSun)
         return true;
     return _CanTakeSunMoney(self, i_amount);
 }
@@ -186,6 +257,10 @@ typedef void (*BoardSetSunMoney_t)(void *self, int i_amount);
 static BoardSetSunMoney_t _BoardSetSunMoney = nullptr;
 typedef void (*BoardPlayerWon_t)(void *self);
 static BoardPlayerWon_t _BoardPlayerWon = nullptr;
+typedef uint8 (*BoardGetPlantfoodMax_t)(void *self);
+static BoardGetPlantfoodMax_t _BoardGetPlantfoodMax = nullptr;
+typedef void (*BoardSetPlantfoodCount_t)(void *self, int);
+static BoardSetPlantfoodCount_t _BoardSetPlantfoodCount = nullptr;
 typedef void (*UnlockAllPlants_t)();      // PVZCheats::UnlockAllPlants() — sin argumentos (mangled _Ev)
 static UnlockAllPlants_t _UnlockAllPlants = nullptr;
 
@@ -219,6 +294,23 @@ void BoardUpdateHook(void *self)
         g_unlockPlantsPending = 0;
         if (_UnlockAllPlants)
             _UnlockAllPlants();
+    }
+
+    // Matar todos los zombis (boton, una vez)
+    if (g_killZombiesPending) {
+        g_killZombiesPending = 0;
+        if (_CheatKillAllZombies)
+            _CheatKillAllZombies();
+    }
+
+    // Dano x10: mata todos los zombis cada frame (one-hit kill)
+    if (g_oneHitKill && _CheatKillAllZombies) {
+        _CheatKillAllZombies();
+    }
+
+    // Alimento de planta infinito: mantener el contador en su maximo cada frame.
+    if (g_infinitePlantFood && _BoardGetPlantfoodMax && _BoardSetPlantfoodCount) {
+        _BoardSetPlantfoodCount(self, (int)_BoardGetPlantfoodMax(self));
     }
 
     _BoardUpdate(self);
@@ -305,15 +397,73 @@ void mainFunc()
     _BoardAddSunMoney = (BoardAddSunMoney_t)SafeResolve("_ZN5Board11AddSunMoneyEi");
     _BoardSetSunMoney = (BoardSetSunMoney_t)SafeResolve("_ZN5Board11SetSunMoneyEi");
     _BoardPlayerWon  = (BoardPlayerWon_t)SafeResolve("_ZN5Board9PlayerWonEv");
+    _BoardGetPlantfoodMax = (BoardGetPlantfoodMax_t)SafeResolve("_ZN5Board15GetPlantfoodMaxEv");
+    _BoardSetPlantfoodCount = (BoardSetPlantfoodCount_t)SafeResolve("_ZN5Board19SetPlantfoodCountEi");
     _UnlockAllPlants = (UnlockAllPlants_t)SafeResolve("_ZN9PVZCheats15UnlockAllPlantsEv");
+
+    _CheatAdd10000Gems  = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatAdd10000GemsEv");
+    _CheatAddStar       = (CheatFn_t)SafeResolve("_ZN9PVZCheats12CheatAddStarEv");
+    _CheatProfileSuper  = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatProfileSuperEv");
+    _CheatGiveLotsOfSun = (CheatFn_t)SafeResolve("_ZN9PVZCheats18CheatGiveLotsOfSunEv");
+    _CheatKillAllZombies = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatKillAllZombiesEv");
+    _CheatAdd10000000Coins = (CheatFn_t)SafeResolve("_ZN9PVZCheats24CheatAdd10000000CoinsEv");
+    _CheatSkipLevel     = (CheatFn_t)SafeResolve("_ZN9PVZCheats12CheatSkipLevelEv");
+    _CheatReloadLevel   = (CheatFn_t)SafeResolve("_ZN9PVZCheats15CheatReloadLevelEv");
+    _CheatUnlockLevels  = (CheatFn_t)SafeResolve("_ZN9PVZCheats18CheatUnlockLevelsEv");
+    _CheatAdd100Leafs   = (CheatFn_t)SafeResolve("_ZN9PVZCheats15CheatAdd100LeafsEv");
+    _CheatCherryBombardment = (CheatFn_t)SafeResolve("_ZN9PVZCheats22CheatCherryBombardmentEv");
+    _CheatWallOfPlants  = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatWallOfPlantsEv");
+    _CheatSpawnNextWave = (CheatFn_t)SafeResolve("_ZN9PVZCheats17CheatSpawnNextWaveEv");
+    _CheatFastMotion    = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats16CheatFastMotionEb");
+    _CheatSlowMotion    = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats16CheatSlowMotionEb");
+    _CheatFreeze        = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats10CheatFreezeEb");
+    _CheatEasyPlanting  = (CheatBoolFn_t)SafeResolve("_ZN9PVZCheats17CheatEasyPlantingEb");
     if (_BoardAddSunMoney == nullptr)
         LOGW("menu: AddSunMoney no resuelto");
     if (_BoardSetSunMoney == nullptr)
         LOGW("menu: SetSunMoney no resuelto");
     if (_BoardPlayerWon == nullptr)
         LOGW("menu: PlayerWon no resuelto");
+    if (_BoardGetPlantfoodMax == nullptr)
+        LOGW("menu: GetPlantfoodMax no resuelto");
+    if (_BoardSetPlantfoodCount == nullptr)
+        LOGW("menu: SetPlantfoodCount no resuelto");
     if (_UnlockAllPlants == nullptr)
         LOGW("menu: UnlockAllPlants no resuelto");
+    if (_CheatAdd10000Gems == nullptr)
+        LOGW("menu: CheatAdd10000Gems no resuelto");
+    if (_CheatAddStar == nullptr)
+        LOGW("menu: CheatAddStar no resuelto");
+    if (_CheatProfileSuper == nullptr)
+        LOGW("menu: CheatProfileSuper no resuelto");
+    if (_CheatGiveLotsOfSun == nullptr)
+        LOGW("menu: CheatGiveLotsOfSun no resuelto");
+    if (_CheatKillAllZombies == nullptr)
+        LOGW("menu: CheatKillAllZombies no resuelto");
+    if (_CheatAdd10000000Coins == nullptr)
+        LOGW("menu: CheatAdd10000000Coins no resuelto");
+    if (_CheatSkipLevel == nullptr)
+        LOGW("menu: CheatSkipLevel no resuelto");
+    if (_CheatReloadLevel == nullptr)
+        LOGW("menu: CheatReloadLevel no resuelto");
+    if (_CheatUnlockLevels == nullptr)
+        LOGW("menu: CheatUnlockLevels no resuelto");
+    if (_CheatAdd100Leafs == nullptr)
+        LOGW("menu: CheatAdd100Leafs no resuelto");
+    if (_CheatCherryBombardment == nullptr)
+        LOGW("menu: CheatCherryBombardment no resuelto");
+    if (_CheatWallOfPlants == nullptr)
+        LOGW("menu: CheatWallOfPlants no resuelto");
+    if (_CheatSpawnNextWave == nullptr)
+        LOGW("menu: CheatSpawnNextWave no resuelto");
+    if (_CheatFastMotion == nullptr)
+        LOGW("menu: CheatFastMotion no resuelto");
+    if (_CheatSlowMotion == nullptr)
+        LOGW("menu: CheatSlowMotion no resuelto");
+    if (_CheatFreeze == nullptr)
+        LOGW("menu: CheatFreeze no resuelto");
+    if (_CheatEasyPlanting == nullptr)
+        LOGW("menu: CheatEasyPlanting no resuelto");
 
     LOGI("libSrcExt: hooks instalados (ok=%d, fail=%d)", g_hookOk, g_hookFail);
     LOGI("libSrcExt: listo!");
